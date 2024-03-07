@@ -74,7 +74,7 @@ const HomePageComponent = () => {
           textAlign: isMobile ? 'center' : 'left',
         }}>
           <Typography variant="h3" component="h1" sx={{ color: 'brown', mb: 4 }}>
-            Welcome to SHARE BAR
+             Share Bar
           </Typography>
           <Typography variant="h5" sx={{ color: 'white', mb: 2 }}>
             Discover our world-class cocktails and beverages
@@ -82,6 +82,11 @@ const HomePageComponent = () => {
           <Link href="/coffees" passHref>
             <Button variant="contained" color="warning" sx={{ zIndex: 2 }}>
               View Menu && Share a menu 
+            </Button>
+          </Link>
+          <Link href="/create-account" passHref>
+            <Button variant="contained" color="warning" sx={{ zIndex: 2 }}>
+               Create account 
             </Button>
           </Link>
         </Box>

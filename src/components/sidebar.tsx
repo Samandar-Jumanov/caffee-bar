@@ -1,82 +1,83 @@
-
 "use client"
 
-import React ,  { useState } from 'react';
-import { Drawer, List, ListItem, ListItemText, CssBaseline, AppBar, Toolbar, Typography, IconButton, Box } from '@mui/material';
+
+import React, { useState } from 'react';
+import {
+  List, ListItemButton, ListItemText, CssBaseline, AppBar, Toolbar, 
+  Typography, IconButton, Box, SwipeableDrawer, useTheme
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from 'next/link';
 
+interface SideBarLayoutProps {}
 
 const drawerWidth = 240;
 
-const SideBarLayout: React.FC  = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const SideBarLayout: React.FC<SideBarLayoutProps> = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const theme = useTheme();
 
   const handleDrawerToggle = () => {
     setIsOpen(!isOpen);
   };
 
+  // Enhanced method for closing the drawer when a list item is clicked
+  // This method provides flexibility for additional actions in the future
+  const handleDrawerClose = () => {
+    setIsOpen(false);
+  };
+
+  const drawerItems = ['About Us', 'Contact Us', 'Share', 'Coffees'];
+
   const drawer = (
-    <>
-      <Toolbar />
-      <List>
-        {['About Us', 'Contact Us', 'Share'].map((text) => (
-          <Link key={text} href={`/${text.toLowerCase().replace(/\s+/g, '')}`} passHref>
-            <ListItem>
-              <ListItemText primary={text} />
-            </ListItem>
-          </Link>
-        ))}
-      </List>
-    </>
+    <List>
+      {drawerItems.map((text, index) => (
+        <Link key={index} href={`/${text.toLowerCase().replace(/\s+/g, '')}`} passHref>
+          <ListItemButton onClick={handleDrawerClose}>
+            <ListItemText primary={text} />
+          </ListItemButton>
+        </Link>
+      ))}
+    </List>
   );
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+      <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1, backgroundColor: "#6f4e37" /* Coffee Brown */ }}>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, ...(isOpen && { display: 'none' }) }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            MySite
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+            My Coffee Shop
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="persistent"
+      <SwipeableDrawer
         anchor="left"
         open={isOpen}
+        onClose={handleDrawerClose}
+        onOpen={handleDrawerToggle}
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' },
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+            paddingTop: theme.mixins.toolbar.minHeight,
+            backgroundColor: "#a58d7f", 
+          },
         }}
       >
         {drawer}
-      </Drawer>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          marginLeft: { sm: `${isOpen ? drawerWidth : 0}px` },
-          transition: (theme) => theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-          }),
-        }}
-      >
-        <Toolbar /> 
-      </Box>
+      </SwipeableDrawer>
     </Box>
   );
 };

@@ -1,11 +1,13 @@
+import Image from "next/image";
+import React from "react";
+import HomePageComponent from  "@/components/layout"
 
 
-
-export const Home = ( ) =>{
-    return (
-
-        <div>   Hello man , How you doing !  </div>
-    )
-};
+const Home = ( ) => {
+   return ( 
+              <HomePageComponent />
+   )
+}
 
 
+export default Home 

@@ -23,7 +23,7 @@ const style = {
   maxHeight: '90%',
 };
 
-const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose }) => {
+const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, onClose }) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={style}>
@@ -37,7 +37,7 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
             </li>
           ))}
         </ul>
-        <Button variant="contained" onClick={onClose} sx={{ marginRight: 1 }}>
+        <Button variant="contained"  sx={{ marginRight: 1 }}>
           Save
         </Button>
         <Button variant="outlined" onClick={onClose}>

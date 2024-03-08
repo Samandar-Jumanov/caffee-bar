@@ -1,18 +1,16 @@
 "use client"
-
 import React from 'react';
 import { TableRow, TableCell, IconButton, Hidden } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
-
-const IngredientsTableRow: React.FC<{ ingredient: { name: string; price: number; quantity: string; }, chosen: { [key: string]: boolean }, handleAddClick: (name: string) => void }> = ({ ingredient, chosen, handleAddClick }) => (
+const IngredientsTableRow: React.FC<{ ingredient: any, chosen: { [key: string]: boolean }, handleAddClick: (name: string) => void }> = ({ ingredient, chosen, handleAddClick }) => (
     <TableRow hover sx={{
         '&:hover': {
-            backgroundColor: '#BCAAA4',
+            backgroundColor: '#BCAAA4', // Hover color for rows
         },
         '& .MuiTableCell-body': {
-            color: '#5D4037',
+            color: '#5D4037', // Cell text color
         },
     }}>
         <TableCell>

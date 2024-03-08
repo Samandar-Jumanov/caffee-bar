@@ -1,18 +1,20 @@
+import React from 'react';
+import { TableRow, TableCell, IconButton, Hidden } from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'; // If you use this
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'; // If you use this
+
+// Assuming ChosenIngredient type has { name, price, quantity } fields
+const ChosenIngredients = ({ data }: { data: ChosenIngredient[] }) => {
+    
+    const chosen = {}; 
 
 
-import { IChosenIngredient } from "@/types/ingredients"
-import ExtractIngredientNames from './extract-names';
-
-const ChosenIngredients = ({ chosenIngredients }: { chosenIngredients: IChosenIngredient[] }) => {
+    
     return (
-        <div>
-            {!chosenIngredients.length ?
-                <h1>No ingredient chosen yet</h1> :
-                <ExtractIngredientNames data={chosenIngredients} />}
-        </div>
+        <>
+             
+        </>
     );
 };
 
 export default ChosenIngredients;
-
-

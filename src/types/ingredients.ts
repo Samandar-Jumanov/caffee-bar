@@ -5,15 +5,6 @@ export interface Ingredient {
 }
 
 
-
-type IValue = {
-      quantity : string ,
-      price : number 
+export type ChosenIngredient = {
+       name : boolean 
 }
-
-export interface IChosenIngredient  {
-       name : string ,
-       value?  : IValue
-}
-
-

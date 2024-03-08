@@ -6,5 +6,14 @@ export interface Ingredient {
 
 
 
+type IValue = {
+      quantity : string ,
+      price : number 
+}
+
+export interface IChosenIngredient  {
+       name : string ,
+       value?  : IValue
+}
 
 

@@ -84,9 +84,10 @@ const HomePageComponent = () => {
               View Menu && Share a menu 
             </Button>
           </Link>
+          <br />
           <Link href="/create-account" passHref>
             <Button variant="contained" color="warning" sx={{ zIndex: 2 }}>
-               Create account 
+             Continue with creating account 
             </Button>
           </Link>
         </Box>

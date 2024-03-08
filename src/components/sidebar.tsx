@@ -56,7 +56,7 @@ const SideBarLayout: React.FC<SideBarLayoutProps> = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            My Coffee Shop
+           Coffee Shop 
           </Typography>
         </Toolbar>
       </AppBar>

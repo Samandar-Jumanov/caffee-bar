@@ -1,58 +1,68 @@
-import NextAuth, { NextAuthOptions, User } from 'next-auth';
+import NextAuth from 'next-auth';
+import prisma from "../../../../../prisma/prisma"
 import GoogleProvider from 'next-auth/providers/google';
-import prisma from '../../../../../prisma/prisma'; 
-import { config } from 'dotenv';
-config();
+import  CredientialsProvider  from 'next-auth/providers/credentials'
+import GithubProvider from 'next-auth/providers/github';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import bcrypt from "bcrypt"
 
-const handler: NextAuthOptions = {
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_ID ?? '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
-    }),
-  ],
-
-  callbacks: {
-    async session({ session, user }) {
-      if (user && user.email) {
-        const sessionUser = await prisma.user.findUnique({
-          where: { email: user.email },
-        });
-
-        if (sessionUser) {
-          (session.user as any & User).id = sessionUser.id;
-        }
-      }
-
-      return session;
-    },
-    async signIn({ account, profile } : any ) {
-      if (account.provider === 'google') {
-        try {
-          const email = profile.email ?? '';
-          const userExists = await prisma.user.findUnique({
-            where: { email : email  },
-          });
-
-          if (!userExists) {
-            await prisma.user.create({
-              data: {
-                email,
-                username: profile.name?.replace(' ', '').toLowerCase() ?? '',
-                image: profile.picture ?? '',
+const authOptions    = {
+     adapter : PrismaAdapter(prisma),
+     providers : [
+          GithubProvider({
+               clientId : process.env.GITHUB_CLIENT_ID as string ,
+               clientSecret : process.env.GITHUB_CLIENT_SECRET as string 
+          }),
+          GoogleProvider({
+                clientId : process.env.GOOGLE_CLIENT_ID as string,
+                clientSecret : process.env.GOOGLE_CLIENT_SECRET as string
+          }),
+          CredientialsProvider({
+              name  : "credientials",
+              credentials : {
+                   email : {label : "Email", type : "email"},
+                   username : {label : "Username", type : "text"},
+                   password : {label : "Password", type : "password"}
               },
-            });
-          }
 
-          return true;
-        } catch (error : any ) {
-          console.error('Error checking if user exists: ', error.message);
-          return false;
-        }
-      }
-      return true; 
-    },
-  },
-};
+              async authorize(credientials) : Promise<any> {
+               if(!credientials.email || !credientials.password) {
+                    throw new Error('Please enter an email and password')
+                }
 
-export default NextAuth(handler);
+                // check to see if user exists
+                const user = await prisma.user.findUnique({
+                    where: {
+                        email: credientials.email
+                    }
+                });
+
+                // if no user was found 
+                if (!user || !user?.hashedPassword) {
+                    throw new Error('No user found')
+                }
+
+                // check to see if password matches
+                const passwordMatch = await bcrypt.compare(credientials.password, user.hashedPassword)
+
+                // if password does not match
+                if (!passwordMatch) {
+                    throw new Error('Incorrect password')
+                }
+
+                return user;
+              }
+          })
+     ],
+     secret : process.env.SECRET as string,
+      session : {
+          strategy : "jwt"
+      },
+      debug : process.env.NODE_ENV === "development"
+}
+
+
+const handler = NextAuth(authOptions);
+
+
+export { handler as POST , handler as GET }

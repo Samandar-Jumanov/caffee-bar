@@ -1,16 +1,19 @@
-
-import React from 'react';
+"use client"
+import React  from 'react';
 import { Button, TextField, Grid, Paper, Typography, Container } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
+import { signIn } from "next-auth/react";
+import { createAccount } from '@/actions/user';
 
 const SignupForm: React.FC = () => {
+
   return (
     <Container maxWidth="sm">
       <Paper elevation={6} style={{ padding: '20px', marginTop: '80px', borderRadius: '15px', backgroundColor: '#fff8e1' }}>
-        <Typography variant="h4" align="center" gutterBottom style={{ color: '#6d4c41'  }}>
+        <Typography variant="h4" align="center" gutterBottom style={{ color: '#6d4c41' }}>
           Sign Up
         </Typography>
-        <form noValidate autoComplete="off">
+        <form noValidate autoComplete="off" action={createAccount}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <TextField
@@ -21,7 +24,7 @@ const SignupForm: React.FC = () => {
                 fullWidth
                 variant="outlined"
                 InputLabelProps={{
-                  style: { color: '#5d4037' }, 
+                  style: { color: '#5d4037' },
                 }}
               />
             </Grid>
@@ -36,6 +39,8 @@ const SignupForm: React.FC = () => {
                 InputLabelProps={{
                   style: { color: '#5d4037' },
                 }}
+                
+                
               />
             </Grid>
             <Grid item xs={12}>
@@ -54,36 +59,38 @@ const SignupForm: React.FC = () => {
             </Grid>
 
             <Grid item xs={12} style={{ textAlign: 'center' }}>
-              <Button type="submit" variant="contained" color="primary" style={{ backgroundColor: '#6d4c41', color: '#ffffff' }}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="warning"
+                style={{ backgroundColor: '#6d4c41', color: '#ffffff' }}
+              >
                 Sign Up
               </Button>
             </Grid>
+            <Grid item xs={12} style={{ textAlign: 'center' }}>
+              <Button
+                type="button"
+                variant="contained"
+                color="primary"
+                style={{ backgroundColor: '#6d4c41', color: '#ffffff' }}
+                onClick={() => signIn("google")}
+                startIcon={<GoogleIcon />}
+              >
+                Continue with Google
+              </Button >
+            </Grid>
+
 
             <Grid item xs={12} style={{ textAlign: 'center' }}>
-            <Button href="/login"   color="warning" >
-                 Already have an account ? 
+              <Button
+                variant="text"
+                color="warning"
+                href="/login"
+              >
+                Already have an account?
               </Button>
             </Grid>
-
-
-            <Grid item xs={12} style={{ textAlign: 'center' }}>
-                    <Button
-                            variant="contained"
-                            startIcon={<GoogleIcon />}
-                            style={{
-                                backgroundColor: '#ffffff', 
-                                color: '#5d4037', 
-                                textTransform: 'none',
-                                fontWeight: 'bold',
-                                marginTop: '20px',
-                                marginBottom: '20px',
-                                boxShadow: '0 3px 5px 2px rgba(0, 0, 0, .1)', 
-                            }}
-                        >
-                       Login with Google
-                   </Button>
-            </Grid>
-
           </Grid>
         </form>
       </Paper>

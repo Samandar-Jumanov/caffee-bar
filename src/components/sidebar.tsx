@@ -1,13 +1,13 @@
 "use client"
 
-
 import React, { useState } from 'react';
 import {
   List, ListItemButton, ListItemText, CssBaseline, AppBar, Toolbar, 
-  Typography, IconButton, Box, SwipeableDrawer, useTheme
+  Typography, IconButton, Box, SwipeableDrawer, useTheme , Button 
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from 'next/link';
+import { signOut, useSession } from 'next-auth/react';
 
 interface SideBarLayoutProps {}
 
@@ -16,28 +16,43 @@ const drawerWidth = 240;
 const SideBarLayout: React.FC<SideBarLayoutProps> = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const theme = useTheme();
+  const { data : session } = useSession();
+
 
   const handleDrawerToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  // Enhanced method for closing the drawer when a list item is clicked
-  // This method provides flexibility for additional actions in the future
+
   const handleDrawerClose = () => {
     setIsOpen(false);
   };
 
-  const drawerItems = ['About Us', 'Contact Us', 'Share', 'Coffees'];
 
   const drawer = (
     <List>
-      {drawerItems.map((text, index) => (
-        <Link key={index} href={`/${text.toLowerCase().replace(/\s+/g, '')}`} passHref>
+        <Link href="/about" >
           <ListItemButton onClick={handleDrawerClose}>
-            <ListItemText primary={text} />
+            <ListItemText primary="About us "/>
           </ListItemButton>
         </Link>
-      ))}
+
+        <Link href="/coffes" >
+          <ListItemButton onClick={handleDrawerClose}>
+            <ListItemText primary="Coffes"/>
+          </ListItemButton>
+        </Link>
+
+        { !session ?  (
+          <Button href="/create-account"
+           variant="contained"
+            color="warning"> Create account  </Button>
+             )  : 
+          <Button color="error"
+           variant="contained" 
+           onClick={signOut} >  Sign out   </Button>
+        }
+        
     </List>
   );
 

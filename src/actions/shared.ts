@@ -23,7 +23,7 @@ export const getSharedById = async (id: string) =>{
     });
 
     return getSharedById;
-}
+};
 
 
 
@@ -39,13 +39,16 @@ export const createShared = async ( formData : FormData , ingredients : string[]
       }
 
 
-     const title = formData.get('title');
+     const title   = formData.get('title');
      const description = formData.get('description');
+     const image = formData.get('image');
 
         const shared = await prisma.shared.create({
             data : {
                 title : title as string,
                 description : description as string,
+                ingredients  : ingredients as string[],
+                image : image as string,
                 user : {
                     connect : {
                         id : userId
@@ -69,6 +72,10 @@ export const createShared = async ( formData : FormData , ingredients : string[]
               }
         })
         return { message : "Shared created successfully" }
-}
+};
+
+
+
+
 
 

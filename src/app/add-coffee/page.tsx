@@ -6,7 +6,8 @@ import IngredientsTableRow from "@/components/tableRow";
 import ShareIngredients from "@/components/share-ingrdients"
 import data from '@/utils/ingredients-data';
 
-const IngredientsTableContainer: React.FC = () => {
+
+const IngredientsTableContainer: React.FC =  () => {
     const [chosen, setChosen] = useState<{ [key: string]: boolean }>({});
     const [close, setClose] = useState<boolean>(false);
 

@@ -1,4 +1,5 @@
 "use server"
+
 import prisma from "../../prisma/prisma"
 
 export const getAllShared = async ( ) =>{

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Stack } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
-import GithubIcon from '@mui/icons-material/Github';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import { IBtns } from "@/types/types"
 const SignInButtons = ({ onGoogleSignIn, onGithubSignIn } : IBtns ) => (
   <Stack direction="column" spacing={2} alignItems="center">
@@ -34,7 +34,7 @@ const SignInButtons = ({ onGoogleSignIn, onGithubSignIn } : IBtns ) => (
         },
       }}
       onClick={onGithubSignIn}
-      startIcon={<GithubIcon />}
+      startIcon={<GitHubIcon />}
     >
       Continue with Github
     </Button>

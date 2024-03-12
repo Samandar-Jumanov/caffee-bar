@@ -3,7 +3,7 @@
 import prisma from "../../prisma/prisma"
 import { ISharedCoffe , ICreatedSharedCoffe } from "@/types/types"
 
-export const getAllShared = async ( )  : Promise<ISharedCoffe[] | null | string >=> {
+export const getAllShared = async ( )  : Promise<ISharedCoffe[]  | string >=> {
        try {
         const getAllShared  : ISharedCoffe[]  | any= await prisma.shared.findMany({
             include : {
@@ -13,6 +13,7 @@ export const getAllShared = async ( )  : Promise<ISharedCoffe[] | null | string 
   
         return getAllShared;
        }catch(err) {
+          console.log(err)
           return "Something went wrong"
        }
 }

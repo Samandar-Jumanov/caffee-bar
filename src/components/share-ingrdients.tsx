@@ -5,7 +5,7 @@ import { Modal, Box, Button, Typography, TextField } from '@mui/material';
 import { useSession } from "next-auth/react";
 import { createShared } from "@/actions/shared";
 import {  useRouter } from "next/navigation"
-import { ResponseType } from "@/types/ingredients"
+import { ResponseType } from "@/types/types"
 import { revalidatePath } from 'next/cache'
 type ShareIngredientsProps = {
   data: { [key: string]: boolean };

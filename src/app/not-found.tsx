@@ -1,5 +1,6 @@
+"use client"
+
 import { Box, Typography, Button } from '@mui/material';
-import Link from 'next/link';
 
 const Custom404  = () => {
   return (
@@ -18,11 +19,9 @@ const Custom404  = () => {
       <Typography variant="subtitle1" gutterBottom>
         The page you're looking for doesn't exist.
       </Typography>
-      <Link href="/" passHref>
-        <Button variant="contained" color="primary">
+        <Button href="/"  variant="contained" color="primary">
           Go home  
         </Button>
-      </Link>
     </Box>
   );
 };

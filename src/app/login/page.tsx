@@ -7,6 +7,7 @@ import SignInButtons from "@/components/btns";
 import { useSession } from "next-auth/react";
 import { signInAccount } from '@/actions/user';
 import { useGlobalContext } from "@/components/context";
+import { ResponseType } from "@/types/types"
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
@@ -45,7 +46,7 @@ const LoginForm: React.FC = () => {
     const formData = new FormData(event.currentTarget);
 
     try {
-      const res = await signInAccount(formData);
+      const res : ResponseType  = await signInAccount(formData);
 
       if (res.success) {
         router.push("/all-coffes"); 
@@ -53,8 +54,8 @@ const LoginForm: React.FC = () => {
       } else {
         alert(res.message); 
       }
-    } catch (err) {
-      alert("Something went wrong", err.message); 
+    } catch (err : any ) {
+      alert("Something went wrong"); 
     } finally {
       setIsLoading(false); 
     }

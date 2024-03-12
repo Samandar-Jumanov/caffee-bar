@@ -1,4 +1,4 @@
-import {Ingredient} from "@/types/ingredients";
+import {Ingredient} from "@/types/types";
 
 const data: Ingredient[] = [
     { name: "Espresso", price: 2.5, quantity: 10 },

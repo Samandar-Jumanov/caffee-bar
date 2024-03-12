@@ -5,7 +5,7 @@ import { Table, TableContainer, Paper, Box , Button  } from '@mui/material';
 import IngredientsTableHead from "@/components/tableHead";
 import IngredientsTableRow from "@/components/tableRow";
 import ShareIngredients from "@/components/share-ingrdients"
-import data from '@/utils/ingredients-data';
+import data from '../../../utils/ingredients-data';
 import { useSession } from "next-auth/react"
 import {CreateAccountPage} from "@/components/account-create"
 
@@ -29,7 +29,7 @@ const IngredientsTableContainer: React.FC =  () => {
         }));
     };
 
-    const chosenIngredients   = Object.values(chosen).filter(value => value);
+    const chosenIngredients : any[] = Object.values(chosen).filter(value => value);
 
 
     return (

@@ -1,58 +1,67 @@
 "use server"
 
 import prisma from "../../prisma/prisma"
+import { ISharedCoffe , ICreatedSharedCoffe } from "@/types/types"
 
-export const getAllShared = async ( ) =>{
-      const getAllShared = await prisma.shared.findMany({
-          include : {
-              user : true
-          }
-      });
-
-      return getAllShared;
-
+export const getAllShared = async ( )  : Promise<ISharedCoffe[] | null | string >=> {
+       try {
+        const getAllShared  : ISharedCoffe[]  | any= await prisma.shared.findMany({
+            include : {
+                user : true
+            }
+        });
+  
+        return getAllShared;
+       }catch(err) {
+          return "Something went wrong"
+       }
 }
 
-export const getSharedById = async (id: string) =>{
-    const getSharedById = await prisma.shared.findUnique({
-        where : {
-            id : id
-        },
-        include : {
-            user : true
-        }
-    });
 
-    return getSharedById;
+export const getSharedById = async (id: string) : Promise<ISharedCoffe | string >  =>{
+         try {
+            const foundShared  : ISharedCoffe | any = await prisma.shared.findUnique({
+                where : {
+                    id : id
+                },
+                include : {
+                    user : true
+                }
+            });
+
+            if(!foundShared) return "Cannot find 404"
+            return foundShared;
+
+         }
+         catch(err){
+              return "Something went wrong"
+         }
 };
 
 
 
-// Assuming the existence of `user` and `shared` models in your Prisma schema.
 export const createShared = async (
     ingredients: string[],
     userEmail: string,
     title: string,
     description: string
-)  => {
+)  : Promise<ICreatedSharedCoffe> => {
    
 
     if (!ingredients.length || !userEmail || !title || !description) {
-        return { message: "Invalid inputs" };
+        return  "Invalid inputs"
     }
 
-      console.log("Started ")
     const user = await prisma.user.findUnique({
         where: { email: userEmail },
         include: { shared: true }
     });
 
     if (!user) {
-        return { message: "User not found | Something went wrong" };
+        return  "User not found | Something went wrong"
     }
 
-    console.log("User found ")
-    const shared = await prisma.shared.create({
+    const shared   = await prisma.shared.create({
         data: {
             title,
             description,
@@ -66,11 +75,8 @@ export const createShared = async (
     });
 
     if (!shared) {
-        return { message: "Shared not created | Something went wrong" };
+          return "Cannot create "
     }
 
-    console.log("created")
-
-
-    return { message: "Created" };
+   return "Created"
 };

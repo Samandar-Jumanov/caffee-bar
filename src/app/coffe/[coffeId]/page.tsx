@@ -2,7 +2,7 @@ import { Box } from "@mui/material"
 import { getSharedById  } from "../../../actions/shared"
 import  CoffeCard from "../../../components/CoffeCard"
 
-const DetailedCoffee = async ({ params }) => {
+const DetailedCoffee = async ({ params } : any ) => {
     const coffeeId = params.coffeId.toString();
     const coffee = await getSharedById(coffeeId);
   

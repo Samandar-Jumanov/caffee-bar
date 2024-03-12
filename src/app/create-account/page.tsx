@@ -8,11 +8,12 @@ import { useSession } from 'next-auth/react';
 import SignInButtons from '@/components/btns'; 
 import { createAccount } from '@/actions/user'; 
 import { useGlobalContext } from "@/components/context"
+import { ResponseType } from "@/types/types"
 
 const SignupForm: React.FC = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { isAuthenticated , setIsAuthenticated  } = useGlobalContext();
    
   useEffect(() => {
@@ -51,19 +52,19 @@ const SignupForm: React.FC = () => {
       const formData = new FormData(event.currentTarget); 
 
       try {
-      const res : boolean =   await createAccount( formData ); 
+      const res  : ResponseType  | undefined  =   await createAccount( formData ); 
 
-      if(res.success) {
+      if(res?.success) {
         setIsAuthenticated(true)
         router.push('/all-coffes'); 
         setIsLoading(false)
         }
 
-        if(!res.succes) {
+        if(!res?.success) {
             alert("Something went wrong")
         }
 
-      } catch (error) {
+      } catch (error : any ) {
           console.log("Something went wrong", error)
       } finally {
         setIsLoading(false); 

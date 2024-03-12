@@ -2,17 +2,16 @@
 
 import { hash , compare} from 'bcrypt'
 import prisma from '../../prisma/prisma'
+import { IUser , ResponseType } from '@/types/types'
 
 
-
-interface ResponseType {
-       success : string 
-       message : string 
-       status ? : number 
-}
 
 export const createAccount = async ( formData : FormData ) =>{
-  const response : ResponseType  = {};
+  const response : ResponseType  = {
+     success : false ,
+     message : "" ,
+  };
+  
 
           try {
                const username = formData.get("name") as string 
@@ -64,8 +63,11 @@ export const createAccount = async ( formData : FormData ) =>{
 
 
 export const signInAccount = async ( formData : FormData ) =>{
-     const response : ResponseType ={}
-
+     const response : ResponseType  = {
+          success : false ,
+          message : "" ,
+       };
+       
        const email = formData.get("email")as string 
        const password = formData.get("password") as string 
 
@@ -75,7 +77,7 @@ export const signInAccount = async ( formData : FormData ) =>{
             return response 
        }
 
-       const user = await prisma.user.findUnique({
+       const user : IUser | null  = await prisma.user.findUnique({
             where : { email : email}
        });
 
@@ -88,7 +90,7 @@ export const signInAccount = async ( formData : FormData ) =>{
 
 
 
-       const isValidPassword = await compare(password , user.password);
+       const isValidPassword = await compare(password , user?.password as string );
 
        if(!isValidPassword ) {
           response['success'] = false ;

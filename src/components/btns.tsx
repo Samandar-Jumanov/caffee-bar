@@ -2,8 +2,8 @@ import React from 'react';
 import { Button, Stack } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
 import GithubIcon from '@mui/icons-material/Github';
-
-const SignInButtons = ({ onGoogleSignIn, onGithubSignIn }) => (
+import { IBtns } from "@/types/types"
+const SignInButtons = ({ onGoogleSignIn, onGithubSignIn } : IBtns ) => (
   <Stack direction="column" spacing={2} alignItems="center">
     <Button
       type="button"

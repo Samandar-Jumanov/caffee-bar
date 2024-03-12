@@ -17,7 +17,7 @@ const Custom404  = () => {
         Oops! somtheing went wrong
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
-        The page you're looking for doesn't exist.
+        The page you are  looking for does not exist 
       </Typography>
         <Button href="/"  variant="contained" color="primary">
           Go home  

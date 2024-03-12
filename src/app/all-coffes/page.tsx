@@ -2,28 +2,18 @@ import React  from "react";
 import { Box, Grid, Card, CardContent, Typography, Button, CardActions } from "@mui/material";
 import { getAllShared } from "@/actions/shared";
 import { ViewDetailsBtn } from "@/components/viewDetailsBtn"
-
-type CoffeeItem = {
-  id: string;
-  title: string;
-  description: string;
-  ingredients: string[];
-};
-
-type SharedResponse = {
-  allShared: CoffeeItem[];
-};
+import { ISharedCoffe } from "@/types/types"
 
 
 const AllCoffes = async  () => {
-      const allShared = await getAllShared();
+      const allShared : ISharedCoffe[]  | any = await getAllShared();
 
   return (
     <>
     
       <Box padding={3}  sx={{ marginTop : '60px'}}>
         <Grid container spacing={4}>
-          {allShared.map((shared) => (
+          {allShared?.map((shared : ISharedCoffe) => (
             <Grid item xs={12} sm={6} md={4} key={shared.id}>
               <Card>
                 <CardContent>

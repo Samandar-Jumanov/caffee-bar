@@ -2,12 +2,13 @@
 
 import { useRouter } from "next/navigation"
 import { Button } from "@mui/material"
+import  { Coffe } from "@/types/types"
 
-export const ViewDetailsBtn= ( coffeId : string ) => {
+export const ViewDetailsBtn= ( coffe : Coffe ) => {
     const router = useRouter();
 
     const handleViewDetails = () =>{
-           router.push(`coffe/${coffeId.coffeId}`)
+           router.push(`coffe/${coffe.coffeId}`)
     };
 
       return (

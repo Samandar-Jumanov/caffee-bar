@@ -2,82 +2,31 @@
 
 import React, { useState } from 'react';
 import {
-  List, ListItemButton, ListItemText, CssBaseline, AppBar, Toolbar,
+  CssBaseline, AppBar, Toolbar,
   Typography, IconButton, Box, SwipeableDrawer, useTheme , Button
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
 import { useGlobalContext } from './context'
-
+import { SideBarDrawer } from './drawer'
 interface SideBarLayoutProps {}
 
 const drawerWidth = 240;
 
 const SideBarLayout: React.FC<SideBarLayoutProps> = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { isAuthenticated , setIsAuthenticated  } = useGlobalContext();
+  const {open, setOpen} =  useGlobalContext()
+
 
   const theme = useTheme();
-  const { data : session } = useSession();
-
 
   const handleDrawerToggle = () => {
-    setIsOpen(!isOpen);
+    setOpen(!open);
   };
 
 
   const handleDrawerClose = () => {
-    setIsOpen(false);
+    setOpen(false);
   };
 
-
-  const handleSignOut = async () =>{
-        if(session) {
-              signOut()
-        }else {
-          setIsAuthenticated(false)
-        }
-  }
-
-
-  const drawer = (
-    <List>
-
-      <Link href="/all-coffes" >
-                    <ListItemButton onClick={handleDrawerClose}>
-                        <ListItemText primary="All coffes "/>
-                      </ListItemButton>
-      </Link>
-
-        {(session || isAuthenticated) ? (
-            <>
-          <Link href="/add-coffe" >
-              <ListItemButton onClick={handleDrawerClose}>
-                  <ListItemText primary="Create ingredient"/>
-                </ListItemButton>
-           </Link>
-
-           <Button color="error" onClick={signOut}>  Log out  </Button>
-
-            </>
-
-
-        ) : 
-        
-        <Button 
-        href="/create-account"
-           variant="contained"
-            color="warning">
-               Create account 
-             </Button>
-        
-        }
-
-       
-
-    </List>
-  );
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -89,7 +38,7 @@ const SideBarLayout: React.FC<SideBarLayoutProps> = () => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, ...(isOpen && { display: 'none' }) }}
+            sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
             <MenuIcon />
           </IconButton>
@@ -100,7 +49,7 @@ const SideBarLayout: React.FC<SideBarLayoutProps> = () => {
       </AppBar>
       <SwipeableDrawer
         anchor="left"
-        open={isOpen}
+        open={open}
         onClose={handleDrawerClose}
         onOpen={handleDrawerToggle}
         sx={{
@@ -114,7 +63,7 @@ const SideBarLayout: React.FC<SideBarLayoutProps> = () => {
           },
         }}
       >
-        {drawer}
+        <SideBarDrawer />
       </SwipeableDrawer>
     </Box>
   );

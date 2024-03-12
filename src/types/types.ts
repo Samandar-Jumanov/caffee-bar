@@ -11,6 +11,7 @@ export type ChosenIngredient = {
 
 
 
+
 export type  ResponseType   = {
     status  ? : number ,
     message : string ,
@@ -32,10 +33,15 @@ export type  IUser  ={
 }
 
 
+export type Coffe = {
+     coffeId : string 
+}
+
 
 export type  ICreatedSharedCoffe =  "Invalid inputs" |  "User not found | Something went wrong" | "Cannot create " | "Created"
 
 export type ISharedCoffe = {
+      id : string 
       title : string 
       description : string 
       ingredients : string[]
@@ -43,3 +49,9 @@ export type ISharedCoffe = {
       image ? : string 
 }
 
+
+
+export type IBtns = {
+    onGoogleSignIn : () => void 
+    onGithubSignIn : () => void
+}

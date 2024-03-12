@@ -6,16 +6,17 @@ import GithubProvider from 'next-auth/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import bcrypt from "bcrypt"
 
+
 const authOptions    = {
      adapter : PrismaAdapter(prisma),
      providers : [
           GithubProvider({
-               clientId : process.env.GITHUB_CLIENT_ID as string ,
-               clientSecret : process.env.GITHUB_CLIENT_SECRET as string 
+            clientId : process.env.GITHUB_CLIENT_ID,
+            clientSecret :process.env.GITHUB_CLIENT_SECRET
           }),
           GoogleProvider({
-                clientId : process.env.GOOGLE_CLIENT_ID as string,
-                clientSecret : process.env.GOOGLE_CLIENT_SECRET as string
+            clientId :  process.env.GOOGLE_CLIENT_ID,
+            clientSecret : process.env.GOOGLE_CLIENT_SECRET
           }),
           CredientialsProvider({
               name  : "credientials",
@@ -27,6 +28,10 @@ const authOptions    = {
 
               async authorize(credientials) : Promise<any> {
                if(!credientials.email || !credientials.password) {
+
+
+
+                
                     throw new Error('Please enter an email and password')
                 }
 
@@ -54,7 +59,7 @@ const authOptions    = {
               }
           })
      ],
-     secret : process.env.SECRET as string,
+     secret : "bjdkfgkrguhiuthiu",
       session : {
           strategy : "jwt"
       },

@@ -1,41 +1,39 @@
 "use server"
 
-import { hash } from 'bcrypt'
+import { hash , compare} from 'bcrypt'
 import prisma from '../../prisma/prisma'
 
 
 
-
-const connectDb = async ( ) =>{
-         try {
-              await prisma.$connect();
-               console.log("db connected ")
-         }catch(err : any ){
-               console.log({
-                      db : err.message
-               })
-         }
+interface ResponseType {
+       success : string 
+       message : string 
+       status ? : number 
 }
 
-
 export const createAccount = async ( formData : FormData ) =>{
-     await connectDb()
+  const response : ResponseType  = {};
+
           try {
                const username = formData.get("name") as string 
                const email = formData.get("email") as string
                const password = formData.get("password") as string
            
-               if(!username || !password || !email) return { message : "Please fill in all fields" }
+               if(!username || !password || !email) {
+                    response['success'] = false ;
+                    response['message'] = "Please enter valid inputs"
+                    return response
+               }
         
                const exist = await prisma.user.findUnique({
                   where : { email : email}
                })
         
                if(exist) {
-                    return  { message : "User already exists"}
+                    response['success'] = false ;
+                    response['message'] = "Email is being used"
+                    return response
                }
-         
-
         
                const hashedPassword = await hash(password, 12);
 
@@ -50,18 +48,60 @@ export const createAccount = async ( formData : FormData ) =>{
                )
         
                if(newUser) {
-                    console.log({ user : "Can be created "})
-                    return { message : "Account created successfully"}
+                    response['success'] = true ;
+                    response['message'] = "Created"
+                    return response 
                }
         
           }catch(error : any  ) {
-                console.log({
-                      userCreation : error.message 
-                })
-                      return { message : "Something went wrong"}
+               response['success'] = false ;
+               response['message'] = "Something went wrong"
+               response['status'] = 500
+               return response 
           }
 
 }
+
+
+export const signInAccount = async ( formData : FormData ) =>{
+     const response : ResponseType ={}
+
+       const email = formData.get("email")as string 
+       const password = formData.get("password") as string 
+
+       if(!email || !password ) {
+            response['success'] = false ;
+            response['message'] = "Invalid inputs"
+            return response 
+       }
+
+       const user = await prisma.user.findUnique({
+            where : { email : email}
+       });
+
+
+       if(!user) {
+             response['success'] = false ;
+            response['message'] = "User not found  "
+            return response 
+       };
+
+
+
+       const isValidPassword = await compare(password , user.password);
+
+       if(!isValidPassword ) {
+          response['success'] = false ;
+          response['message'] = "Invalid password"
+          return response 
+       };
+       
+        response['success'] = true ;
+        response['message'] = "Logged in"
+        return response 
+};
+
+
 
 
 

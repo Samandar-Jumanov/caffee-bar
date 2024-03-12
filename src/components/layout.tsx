@@ -4,8 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Box, Typography, Button, useTheme, useMediaQuery } from '@mui/material';
 import BarImage from "../../public/bar.jpg";
-
 const HomePageComponent = () => {
+
   const theme = useTheme();
   const isMobile  : boolean = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -79,17 +79,14 @@ const HomePageComponent = () => {
           <Typography variant="h5" sx={{ color: 'white', mb: 2 }}>
             Discover our world-class cocktails and beverages
           </Typography>
-          <Link href="/coffees" passHref>
+          <Link href="/all-coffes" passHref>
             <Button variant="contained" color="warning" sx={{ zIndex: 2 }}>
-              View Menu && Share a menu 
+              View shared coffes 
             </Button>
           </Link>
-          <br />
-          <Link href="/create-account" passHref>
-            <Button variant="contained" color="warning" sx={{ zIndex: 2 }}>
-             Continue with creating account 
-            </Button>
-          </Link>
+       
+            <Button href='/add-coffee'
+             color="warning" >  Create && Share  </Button>
         </Box>
       </Box>
     </Box>

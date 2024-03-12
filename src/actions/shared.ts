@@ -28,55 +28,49 @@ export const getSharedById = async (id: string) =>{
 
 
 
+// Assuming the existence of `user` and `shared` models in your Prisma schema.
+export const createShared = async (
+    ingredients: string[],
+    userEmail: string,
+    title: string,
+    description: string
+)  => {
+   
 
-export const createShared = async ( formData : FormData , ingredients : string[] , userId : string ) =>{
-      const user = await prisma.user.findUnique({
-          where : { id : userId },
-          include : { shared : true}
-      });
+    if (!ingredients.length || !userEmail || !title || !description) {
+        return { message: "Invalid inputs" };
+    }
 
-      if(!user) {
-           return { message :"User not found | Something went wrong "}
-      }
+      console.log("Started ")
+    const user = await prisma.user.findUnique({
+        where: { email: userEmail },
+        include: { shared: true }
+    });
 
+    if (!user) {
+        return { message: "User not found | Something went wrong" };
+    }
 
-     const title   = formData.get('title');
-     const description = formData.get('description');
-     const image = formData.get('image');
-
-        const shared = await prisma.shared.create({
-            data : {
-                title : title as string,
-                description : description as string,
-                ingredients  : ingredients as string[],
-                image : image as string,
-                user : {
-                    connect : {
-                        id : userId
-                    }
+    console.log("User found ")
+    const shared = await prisma.shared.create({
+        data: {
+            title,
+            description,
+            ingredients,
+            user: {
+                connect: {
+                    id: user.id 
                 }
             }
-        });
-
-        if(!shared) {
-            return { message : "Shared not created | Something went wrong"}
         }
+    });
 
-        await prisma.user.update({
-              where : { id : userId },
-              data : {
-                  shared : {
-                      connect : {
-                          id : shared.id
-                      }
-                  }
-              }
-        })
-        return { message : "Shared created successfully" }
+    if (!shared) {
+        return { message: "Shared not created | Something went wrong" };
+    }
+
+    console.log("created")
+
+
+    return { message: "Created" };
 };
-
-
-
-
-
-

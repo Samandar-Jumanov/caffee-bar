@@ -8,3 +8,10 @@ export interface Ingredient {
 export type ChosenIngredient = {
        name : boolean 
 }
+
+
+
+export type  ResponseType   = {
+    status : number ,
+    message : string 
+}

@@ -1,11 +1,74 @@
 "use client"
-import React  from 'react';
-import { Button, TextField, Grid, Paper, Typography, Container } from '@mui/material';
-import GoogleIcon from '@mui/icons-material/Google';
-import { signIn } from "next-auth/react";
-import { createAccount } from '@/actions/user';
+
+import React, { useEffect, useState } from 'react';
+import { Button, TextField, Grid, Paper, Typography, Container, CircularProgress } from '@mui/material';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import SignInButtons from '@/components/btns'; 
+import { createAccount } from '@/actions/user'; 
+import { useGlobalContext } from "@/components/context"
 
 const SignupForm: React.FC = () => {
+  const router = useRouter();
+  const { data: session } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
+  const { isAuthenticated , setIsAuthenticated  } = useGlobalContext();
+   
+  useEffect(() => {
+    if (session) {
+      router.push('/all-coffees'); 
+    }
+  }, [session, router]);
+
+  const handleSignInWithGoogle = async () => {
+    setIsLoading(true);
+    try {
+      await signIn('google');
+    } catch (error) {
+      console.error('Error signing in with Google:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignInWithGitHub = async () => {
+    setIsLoading(true);
+    try {
+      await signIn('github');
+    } catch (error) {
+      console.error('Error signing in with GitHub:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+  console.log(isAuthenticated)
+  const handleSubmit = async (event :  any ) => {
+      event.preventDefault(); 
+      setIsLoading(true); 
+      const formData = new FormData(event.currentTarget); 
+
+      try {
+      const res : boolean =   await createAccount( formData ); 
+
+      if(res.success) {
+        setIsAuthenticated(true)
+        router.push('/all-coffes'); 
+        setIsLoading(false)
+        }
+
+        if(!res.succes) {
+            alert("Something went wrong")
+        }
+
+      } catch (error) {
+          console.log("Something went wrong", error)
+      } finally {
+        setIsLoading(false); 
+      };
+  };
 
   return (
     <Container maxWidth="sm">
@@ -13,7 +76,7 @@ const SignupForm: React.FC = () => {
         <Typography variant="h4" align="center" gutterBottom style={{ color: '#6d4c41' }}>
           Sign Up
         </Typography>
-        <form noValidate autoComplete="off" action={createAccount}>
+        <form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <TextField
@@ -23,9 +86,7 @@ const SignupForm: React.FC = () => {
                 label="Full Name"
                 fullWidth
                 variant="outlined"
-                InputLabelProps={{
-                  style: { color: '#5d4037' },
-                }}
+                InputLabelProps={{ style: { color: '#5d4037' } }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -36,11 +97,7 @@ const SignupForm: React.FC = () => {
                 label="Email Address"
                 fullWidth
                 variant="outlined"
-                InputLabelProps={{
-                  style: { color: '#5d4037' },
-                }}
-                
-                
+                InputLabelProps={{ style: { color: '#5d4037' } }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -52,42 +109,28 @@ const SignupForm: React.FC = () => {
                 type="password"
                 fullWidth
                 variant="outlined"
-                InputLabelProps={{
-                  style: { color: '#5d4037' },
-                }}
+                InputLabelProps={{ style: { color: '#5d4037' } }}
               />
             </Grid>
-
             <Grid item xs={12} style={{ textAlign: 'center' }}>
               <Button
                 type="submit"
                 variant="contained"
                 color="warning"
                 style={{ backgroundColor: '#6d4c41', color: '#ffffff' }}
+                disabled={isLoading}
               >
-                Sign Up
+                {isLoading ? <CircularProgress size={24} /> : 'Sign Up'}
               </Button>
             </Grid>
             <Grid item xs={12} style={{ textAlign: 'center' }}>
-              <Button
-                type="button"
-                variant="contained"
-                color="primary"
-                style={{ backgroundColor: '#6d4c41', color: '#ffffff' }}
-                onClick={() => signIn("google")}
-                startIcon={<GoogleIcon />}
-              >
-                Continue with Google
-              </Button >
+              <SignInButtons
+                onGoogleSignIn={handleSignInWithGoogle}
+                onGithubSignIn={handleSignInWithGitHub}
+              />
             </Grid>
-
-
             <Grid item xs={12} style={{ textAlign: 'center' }}>
-              <Button
-                variant="text"
-                color="warning"
-                href="/login"
-              >
+              <Button variant="text" color="warning" href="/login">
                 Already have an account?
               </Button>
             </Grid>

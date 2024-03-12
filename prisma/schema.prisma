@@ -19,7 +19,7 @@ model User {
   updatedAt      DateTime  @updatedAt
 
   accounts Account[]
-  shares   Shared[]
+  shared   Shared[]
 }
 
 model Account {
@@ -39,6 +39,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@unique([provider, providerAccountId])
 }
+
 
 model Shared {
   id          String   @id @default(uuid())

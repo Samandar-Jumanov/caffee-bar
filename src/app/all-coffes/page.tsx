@@ -1,13 +1,12 @@
 
-
 import React from "react";
 import { Box, Grid, Card, CardContent, Typography, CardActions } from "@mui/material";
 import { getAllShared } from "@/actions/shared";
 import { ViewDetailsBtn } from "@/components/viewDetailsBtn";
 import { ISharedCoffe } from "@/types/types";
-import { useRouter } from "next/navigation"
-const AllCoffees = async () => {
-  const allShared = await getAllShared();
+
+const AllCoffees = async  () => {
+  const allShared =  await  getAllShared();
 
   const isSharedArray = Array.isArray(allShared);
 

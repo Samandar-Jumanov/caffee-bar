@@ -1,9 +1,11 @@
 "use client"
+
 import React, { useState } from 'react';
 import { Modal, Box, Button, Typography, TextField } from '@mui/material';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation"; // Corrected import
 import { createShared } from "@/actions/shared";
+import { revalidate } from "@/utils/sharebtn"
 
 type ShareIngredientsProps = {
   data: { [key: string]: boolean };
@@ -40,8 +42,9 @@ const style = {
 const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose }) => {
     const { data: session } = useSession();
     const [title, setTitle] = useState('');
+
     const [description, setDescription] = useState('');
-    const router = useRouter(); // Corrected use of useRouter
+    const router = useRouter(); 
     const userEmail = session?.user?.email; 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -49,6 +52,7 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
         if(userEmail) {
             try {
                 const selectedIngredients = Object.keys(data).filter(key => data[key]);
+                 revalidate()
                 const res = await createShared(selectedIngredients, userEmail, title, description);
                 if(res == "Created") {
                     onClose()
@@ -56,10 +60,10 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
                 }
             } catch (error) {
                 console.error("Failed to share ingredients", error);
-               
             }
         }
     };
+    
 
   return (
     <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">

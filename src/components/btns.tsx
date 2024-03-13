@@ -3,7 +3,8 @@ import { Button, Stack } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { IBtns } from "@/types/types"
-const SignInButtons = ({ onGoogleSignIn, onGithubSignIn } : IBtns ) => (
+
+ const SignInButtons = ({ onGoogleSignIn, onGithubSignIn } : IBtns ) => (
   <Stack direction="column" spacing={2} alignItems="center">
     <Button
       type="button"
@@ -41,4 +42,7 @@ const SignInButtons = ({ onGoogleSignIn, onGithubSignIn } : IBtns ) => (
   </Stack>
 );
 
-export default SignInButtons;
+
+
+
+export  default SignInButtons

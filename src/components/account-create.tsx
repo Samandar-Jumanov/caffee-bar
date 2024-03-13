@@ -15,10 +15,10 @@ export const CreateAccountPage = () => {
       }}
     >
       <Typography variant="h4" gutterBottom component="div" sx={{ color: '#ffffff', marginBottom: 2 }}>
-       To continue please open an account 
+       To continue please login to your   account 
       </Typography>
       <Button
-        href="/create"
+        href="/login"
         color="warning"
         variant="contained"
         sx={{

@@ -17,9 +17,9 @@ const LoginForm: React.FC = () => {
   const { isAuthenticated, setIsAuthenticated } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
 
-  if (session || isAuthenticated) {
-    return <h1>Please sign out from your current account please</h1>;
-  }
+  // if (session || isAuthenticated) {
+  //   return <h1 color>Please sign out from your current account please</h1>;
+  // }
 
   const handleSignInWithGoogle = async () => {
     try {

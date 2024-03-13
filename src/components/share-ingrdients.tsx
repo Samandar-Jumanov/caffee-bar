@@ -1,12 +1,9 @@
 "use client"
-
 import React, { useState } from 'react';
 import { Modal, Box, Button, Typography, TextField } from '@mui/material';
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation"; // Corrected import
 import { createShared } from "@/actions/shared";
-import {  useRouter } from "next/navigation"
-import { revalidatePath } from 'next/cache'
-import { redirect } from "next/navigation"
 
 type ShareIngredientsProps = {
   data: { [key: string]: boolean };
@@ -14,30 +11,29 @@ type ShareIngredientsProps = {
   onClose: () => void;
 };
 
-
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: { xs: '90%', sm: '80%', md: '70%', lg: '60%' }, 
+  width: { xs: '90%', sm: '80%', md: '70%', lg: '60%' },
   bgcolor: 'rgba(0, 0, 0, 0.8)',
   color: 'white',
-  border: '2px solid #fff', 
+  border: '2px solid #fff',
   borderRadius: '8px',
-  boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.5)', 
-  p: { xs: 2, sm: 3, md: 4 }, 
+  boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.5)',
+  p: { xs: 2, sm: 3, md: 4 },
   overflowY: 'auto',
   maxHeight: '90%',
   '& ul': {
-    listStyle: 'none', 
+    listStyle: 'none',
     padding: 0,
   },
   '& li': {
     marginBottom: '8px',
   },
   '& button': {
-    marginTop: '16px', 
+    marginTop: '16px',
   },
 };
 
@@ -45,23 +41,27 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
     const { data: session } = useSession();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const router = useRouter()
+    const router = useRouter(); // Corrected use of useRouter
     const userEmail = session?.user?.email; 
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if(userEmail) {
-            const res  : string   =  await createShared(Object.keys(data).filter(key => data[key]), userEmail, title, description);
-            if(res == "Created") {
-              revalidatePath("/all-coffes" , 'page')
-              redirect("/all-coffes")
-              onClose(); 
+            try {
+                const selectedIngredients = Object.keys(data).filter(key => data[key]);
+                const res = await createShared(selectedIngredients, userEmail, title, description);
+                if(res == "Created") {
+                    onClose()
+                    router.push("/all-coffes"); 
+                }
+            } catch (error) {
+                console.error("Failed to share ingredients", error);
+                // Optionally, handle error state in UI
             }
         }
     };
 
   return (
-
     <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <Box sx={style} component="form" onSubmit={handleSubmit}>
         <Typography id="modal-modal-title" variant="h6" component="h2" marginBottom="16px">

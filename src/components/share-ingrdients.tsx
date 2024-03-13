@@ -50,11 +50,15 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if(userEmail) {
-           const res   =  await createShared(Object.keys(data).filter(key => data[key]), userEmail, title, description);
-          //  revalidatePath("/all-coffes" , 'page')
-            router.push("/all-coffes")
+            const res  : string   =  await createShared(Object.keys(data).filter(key => data[key]), userEmail, title, description);
+            if(res == "Created") {
+              revalidatePath("/all-coffes")
+              router.push("/all-coffes")
               onClose(); 
+            }
         }
+
+
     };
 
   return (

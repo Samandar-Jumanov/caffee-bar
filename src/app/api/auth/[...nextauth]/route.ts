@@ -1,5 +1,5 @@
-import NextAuth from 'next-auth';
-import prisma from "../../../../prisma/prisma"
+import NextAuth , { AuthOptions } from 'next-auth';
+import prisma from "../../../../../prisma/prisma"
 import GoogleProvider from 'next-auth/providers/google';
 import  CredientialsProvider  from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github';
@@ -7,14 +7,8 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import bcrypt from "bcrypt"
 
 
-interface Options {
-    adapter : any ,
-    providers : any[],
-    secret : string | undefined ,
-    session : any ,
-    debug : any 
-}
-const authOptions  : Options    = {
+
+const authOptions  : AuthOptions    = {
      adapter : PrismaAdapter(prisma),
      providers : [
           GithubProvider({

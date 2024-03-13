@@ -54,8 +54,7 @@ export const createShared = async (
     }
 
     const user = await prisma.user.findUnique({
-        where: { email: userEmail },
-        include: { shared: true }
+        where: { email: userEmail }
     });
 
     if (!user) {

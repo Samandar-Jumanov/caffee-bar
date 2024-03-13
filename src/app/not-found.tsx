@@ -14,7 +14,7 @@ const Custom404  = () => {
       color="text.primary"
     >
       <Typography variant="h4" component="h1" gutterBottom>
-        Oops! somtheing went wrong
+        Oops! Something went wrong
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
         The page you are  looking for does not exist 

@@ -33,10 +33,16 @@ return  (
                     <ListItemText primary="All coffes "/>
                   </ListItemButton>
   </Link>
+  
+  <Link href="/" >
+                <ListItemButton onClick={handleDrawerClose}>
+                    <ListItemText primary="Home "/>
+                  </ListItemButton>
+  </Link>
 
     {(session || isAuthenticated) ? (
         <>
-      <Link href="/add-coffe" >
+      <Link href="/add-coffee" >
           <ListItemButton onClick={handleDrawerClose}>
               <ListItemText primary="Create ingredient"/>
             </ListItemButton>
@@ -53,12 +59,7 @@ return  (
         color="warning">
            Create account 
          </Button>
-    
     }
-
-   
-
 </List>
 );
-
 }

@@ -18,7 +18,7 @@ const SignupForm: React.FC = () => {
    
   useEffect(() => {
     if (session) {
-      router.push('/all-coffees'); 
+      router.push('/all-coffes'); 
     }
   }, [session, router]);
 
@@ -26,6 +26,7 @@ const SignupForm: React.FC = () => {
     setIsLoading(true);
     try {
       await signIn('google');
+      
     } catch (error) {
       console.error('Error signing in with Google:', error);
     } finally {

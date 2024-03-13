@@ -56,7 +56,7 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
                 }
             } catch (error) {
                 console.error("Failed to share ingredients", error);
-                // Optionally, handle error state in UI
+               
             }
         }
     };

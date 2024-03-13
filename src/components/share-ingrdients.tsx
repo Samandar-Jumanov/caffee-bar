@@ -5,8 +5,8 @@ import { Modal, Box, Button, Typography, TextField } from '@mui/material';
 import { useSession } from "next-auth/react";
 import { createShared } from "@/actions/shared";
 import {  useRouter } from "next/navigation"
-import { ResponseType } from "@/types/types"
 import { revalidatePath } from 'next/cache'
+
 type ShareIngredientsProps = {
   data: { [key: string]: boolean };
   open: boolean;
@@ -52,16 +52,14 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
         if(userEmail) {
             const res  : string   =  await createShared(Object.keys(data).filter(key => data[key]), userEmail, title, description);
             if(res == "Created") {
-              revalidatePath("/all-coffes")
               router.push("/all-coffes")
               onClose(); 
             }
         }
-
-
     };
 
   return (
+
     <Modal open={open} onClose={onClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <Box sx={style} component="form" onSubmit={handleSubmit}>
         <Typography id="modal-modal-title" variant="h6" component="h2" marginBottom="16px">

@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { createShared } from "@/actions/shared";
 import {  useRouter } from "next/navigation"
 import { revalidatePath } from 'next/cache'
+import { redirect } from "next/navigation"
 
 type ShareIngredientsProps = {
   data: { [key: string]: boolean };
@@ -52,7 +53,8 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
         if(userEmail) {
             const res  : string   =  await createShared(Object.keys(data).filter(key => data[key]), userEmail, title, description);
             if(res == "Created") {
-              router.push("/all-coffes")
+              revalidatePath("/all-coffes" , 'page')
+              redirect("/all-coffes")
               onClose(); 
             }
         }

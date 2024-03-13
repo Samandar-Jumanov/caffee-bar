@@ -30,10 +30,6 @@ const authOptions  : AuthOptions    = {
               async authorize(credientials : any ) : Promise<any> {
                if(!credientials.email || !credientials.password) {
 
-
-
-                
-
                     throw new Error('Please enter an email and password')
                 }
 
@@ -61,11 +57,11 @@ const authOptions  : AuthOptions    = {
               }
           })
      ],
-     secret : "bjdkfgkrguhiuthiu",
+     secret : process.env.SECRET,
       session : {
           strategy : "jwt"
       },
-      debug : process.env.NODE_ENV === "development"
+      debug : process.env.NODE_ENV === "production"
 }
 
 

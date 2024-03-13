@@ -52,6 +52,6 @@ export type ISharedCoffe = {
 
 
 export type IBtns = {
-    onGoogleSignIn : () => void 
+    onGoogleSignIn ?  : () => void 
     onGithubSignIn : () => void
 }

@@ -22,17 +22,7 @@ const SignupForm: React.FC = () => {
     }
   }, [session, router]);
 
-  const handleSignInWithGoogle = async () => {
-    setIsLoading(true);
-    try {
-      await signIn('google');
-      
-    } catch (error) {
-      console.error('Error signing in with Google:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  
 
   const handleSignInWithGitHub = async () => {
     setIsLoading(true);
@@ -127,7 +117,6 @@ const SignupForm: React.FC = () => {
             </Grid>
             <Grid item xs={12} style={{ textAlign: 'center' }}>
               <SignInButtons
-                onGoogleSignIn={handleSignInWithGoogle}
                 onGithubSignIn={handleSignInWithGitHub}
               />
             </Grid>

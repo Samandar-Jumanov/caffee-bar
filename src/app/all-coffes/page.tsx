@@ -5,10 +5,27 @@ import { Box, Grid, Card, CardContent, Typography, CardActions } from "@mui/mate
 import { getAllShared } from "@/actions/shared";
 import { ViewDetailsBtn } from "@/components/viewDetailsBtn";
 import { ISharedCoffe } from "@/types/types";
-import { revalidatePath } from "next/cache"
+
+
+
+const Skeleton = () =>{
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%',
+        width: '100%',
+      }}
+    >
+      <Typography color="warning">Loading....</Typography>
+    </Box>
+  );
+}
 
 const AllCoffees =  async  () => {
-  const [allShared, setAllShared] = useState<ISharedCoffe[] | string>([]);
+  const [allShared, setAllShared] = useState<ISharedCoffe[] >([]);
 
   useEffect(() => {
     const fetchAllShared = async () => {
@@ -21,6 +38,10 @@ const AllCoffees =  async  () => {
 
   const isSharedArray = Array.isArray(allShared);
 
+
+  if(!allShared || allShared.length <=0 ) {
+       return <Skeleton />
+  }
   return (
     <>
       <Box padding={3} sx={{ marginTop: '60px' }}>

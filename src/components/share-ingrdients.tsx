@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Modal, Box, Button, Typography, TextField, CircularProgress } from '@mui/material';
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router"; // Ensure correct import for useRouter
+import { useRouter } from "next/navigation"; 
 import { createShared } from "@/actions/shared";
 
 type ShareIngredientsProps = {

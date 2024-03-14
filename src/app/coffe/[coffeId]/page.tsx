@@ -1,4 +1,4 @@
-import { Box } from "@mui/material"
+import { Box , Button  } from "@mui/material"
 import { getSharedById  } from "../../../actions/shared"
 import  CoffeCard from "../../../components/CoffeCard"
 
@@ -16,6 +16,7 @@ const DetailedCoffee = async ({ params } : any ) => {
         p: 2,
       }}>
         <CoffeCard coffee={coffee} />
+        <Button  href='/all-coffes' size="small">  All coffes  </Button>
       </Box>
     );
   };

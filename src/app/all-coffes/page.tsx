@@ -6,8 +6,6 @@ import { getAllShared } from "@/actions/shared";
 import { ViewDetailsBtn } from "@/components/viewDetailsBtn";
 import { ISharedCoffe } from "@/types/types";
 
-
-
 const Skeleton = () =>{
   return (
     <Box

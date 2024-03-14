@@ -20,7 +20,7 @@ const authOptions: NextAuthOptions = {
         name: { label: "Username", type: "text", placeholder: "Optional" }, 
         password: { label: "Password", type: "password" },
       },
-      async authorize( credentials : ICredentials )  {
+      async authorize( credentials : ICredentials | any  )  {
         if (!credentials.email || !credentials.password) {
           throw new Error('Email and password are required');
         }

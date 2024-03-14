@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import prisma from '../../../../../prisma/prisma'; // Adjust this import path to where your Prisma client is initialized
 import GithubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { ICredentials } from '@/types/types'; 
+import { ICredentials , IUser } from '@/types/types'; 
 
 const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -25,7 +25,7 @@ const authOptions: NextAuthOptions = {
           throw new Error('Email and password are required');
         }
 
-        const user = await prisma.user.findUnique({
+        const user : IUser | null = await prisma.user.findUnique({
           where: {
             email: credentials.email,
           },

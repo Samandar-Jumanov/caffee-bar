@@ -5,6 +5,7 @@ import { List, ListItemButton, ListItemText, Button  } from '@mui/material';
 import { signOut , useSession  } from 'next-auth/react';
 import { useGlobalContext } from './context'
 import Link from 'next/link';
+import { toast } from "react-hot-toast"
 
 
 export const SideBarDrawer = ( ) =>{
@@ -14,6 +15,7 @@ const { data : session } = useSession();
 const handleSignOut = async () =>{
     if(session) {
           await  signOut()
+          toast.success("Logged out succesfully")
     }else {
       setIsAuthenticated(false)
     }

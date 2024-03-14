@@ -32,7 +32,7 @@ const authOptions: NextAuthOptions = {
         });
 
         if (user && user.password) {
-          const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword);
+          const passwordMatch = await bcrypt.compare(credentials.password, user.password  as string  );
 
           if (!passwordMatch) {
             throw new Error('Incorrect password');
@@ -42,8 +42,8 @@ const authOptions: NextAuthOptions = {
         } else if (!user && credentials.name) {
           const newUser = await prisma.user.create({
             data: {
-              email: credentials.email,
-              name: credentials.username,
+              email: credentials.email as string ,
+              name: credentials.username as string ,
               password: await bcrypt.hash(credentials.password, 10),
             },
           });

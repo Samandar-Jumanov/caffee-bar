@@ -4,6 +4,7 @@ import { Modal, Box, Button, Typography, TextField, CircularProgress } from '@mu
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation"; 
 import { createShared } from "@/actions/shared";
+import { toast } from "react-hot-toast";
 
 type ShareIngredientsProps = {
   data: { [key: string]: boolean };
@@ -54,10 +55,14 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
                 const res = await createShared(selectedIngredients, userEmail, title, description);
                 if(res === "Created") {
                     onClose();
+                    toast.success("Shared succesfully");
                     router.push("/all-coffes"); 
+                }else {
+                      toast.error("Failed to share ingredients");
                 }
+
             } catch (error) {
-                console.error("Failed to share ingredients", error);
+                toast.error(" Something went wrong with sharing  ");
             } finally {
                 setIsLoading(false); 
             }

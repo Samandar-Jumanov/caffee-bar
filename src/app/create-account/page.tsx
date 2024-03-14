@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import SignInButtons from '@/components/btns'; 
 import { useGlobalContext } from "@/components/context"
+import { toast } from "react-hot-toast"
 
 const SignupForm: React.FC = () => {
   const router = useRouter();
@@ -27,8 +28,9 @@ const SignupForm: React.FC = () => {
     setIsLoading(true);
     try {
       await signIn('github');
-    } catch (error) {
-      console.error('Error signing in with GitHub:', error);
+      taost.success("Account created successfully")
+    } catch (error : any ) {
+      taost.error(`Cannot create an account ${error.message}`)
     } finally {
       setIsLoading(false);
     }
@@ -44,10 +46,9 @@ const SignupForm: React.FC = () => {
           name : name ,
           signup: "true"
         });
-        router.push("/all-coffes")
-     
-      }catch(err){
-            console.log(err)
+        taost.success("Account created successfully")
+      }catch(error : any ){
+       taost.error(`Cannot create an account ${error.message}`)
       }
   };
 

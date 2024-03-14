@@ -3,6 +3,7 @@ import SideBarLayout from "@/components/sidebar"
 import './globals.css'
 import Provider from "@/components/provider"
 import { GlobalContextProvider } from "@/components/context";
+import ToasterContext from "@/components/ToasterContext";
 
 
 export const metadata: Metadata = {
@@ -20,9 +21,10 @@ export default function RootLayout({
        <body>
         <Provider> 
             <GlobalContextProvider > 
-               <SideBarLayout />
+              <ToasterContext />
+                <SideBarLayout />
                  {children}
-             </GlobalContextProvider>
+              </GlobalContextProvider>
           </Provider>
         </body>
     </html>

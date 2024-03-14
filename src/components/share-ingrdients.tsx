@@ -5,6 +5,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation"; 
 import { createShared } from "@/actions/shared";
 import { toast } from "react-hot-toast";
+import ImageUploader from  "./image-uploader"
+import { useGlobalContext } from './context';
 
 type ShareIngredientsProps = {
   data: { [key: string]: boolean };
@@ -45,14 +47,16 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
     const [isLoading, setIsLoading] = useState(false); 
     const router = useRouter(); 
     const userEmail = session?.user?.email;
+    const { selectedFile } = useGlobalContext();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
-        if(userEmail) {
+        
+        if(userEmail && selectedFile) {
             try {
                 const selectedIngredients = Object.keys(data).filter(key => data[key]);
-                const res = await createShared(selectedIngredients, userEmail, title, description);
+                const res = await createShared(selectedIngredients, userEmail, title, description , selectedFile);
                 if(res === "Created") {
                     onClose();
                     toast.success("Shared succesfully");
@@ -107,6 +111,9 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
             </li>
           ))}
         </ul>
+        <Box>
+          <ImageUploader />
+        </Box>
         <Button type="submit" variant="contained" sx={{ marginRight: 1 }} disabled={isLoading}>
           {isLoading ? <CircularProgress size={24} /> : "Share"}
         </Button>

@@ -50,11 +50,12 @@ return  (
             </ListItemButton>
        </Link>
        <ListItemButton onClick={handleDrawerClose}>
-          <Button color="error" variant="contained" onClick={handleSignOut}>  Log out  </Button>
-  
+          <Button color="error" variant="contained"
+           onClick={handleSignOut} size="medium">  
+           Log out 
+           </Button>
         </ListItemButton>
         </>
-
 
     ) : 
     

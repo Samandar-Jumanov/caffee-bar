@@ -2,6 +2,7 @@
 
 import prisma from "../../prisma/prisma"
 import { ISharedCoffe , ICreatedSharedCoffe } from "@/types/types"
+import  saveToBucket from "@/utils/shareBucket";
 
 export const getAllShared = async ( )  : Promise<ISharedCoffe[]  | string >=> {
        try {
@@ -45,8 +46,9 @@ export const createShared = async (
     ingredients: string[],
     userEmail: string,
     title: string,
-    description: string
-)  : Promise<ICreatedSharedCoffe> => {
+    description: string,
+    selectedFile  : File | null 
+)  : Promise<ICreatedSharedCoffe | string > => {
    
 
     if (!ingredients.length || !userEmail || !title || !description) {
@@ -61,11 +63,24 @@ export const createShared = async (
         return  "User not found | Something went wrong"
     }
 
+    let imageUrl = "";
+    if(!selectedFile){
+          return "No image selected"
+    };
+
+
+    imageUrl   = await saveToBucket(selectedFile);
+    if(!imageUrl){
+        return "Cannot save image"
+    }
+
+
     const shared   = await prisma.shared.create({
         data: {
             title,
             description,
             ingredients,
+            image : imageUrl,
             user: {
                 connect: {
                     id: user.id 

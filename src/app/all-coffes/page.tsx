@@ -25,7 +25,7 @@ const Skeleton = () =>{
 }
 
 const AllCoffees =  async  () => {
-  const [allShared, setAllShared] = useState<ISharedCoffe[] >([]);
+  const [allShared, setAllShared] = useState<ISharedCoffe[] | string>([]);
 
   useEffect(() => {
     const fetchAllShared = async () => {

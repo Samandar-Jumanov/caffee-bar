@@ -1,9 +1,8 @@
 "use client"
-
 import React, { useState } from 'react';
-import { Modal, Box, Button, Typography, TextField } from '@mui/material';
+import { Modal, Box, Button, Typography, TextField, CircularProgress } from '@mui/material';
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation"; // Corrected import
+import { useRouter } from "next/router"; // Ensure correct import for useRouter
 import { createShared } from "@/actions/shared";
 
 type ShareIngredientsProps = {
@@ -41,23 +40,26 @@ const style = {
 const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose }) => {
     const { data: session } = useSession();
     const [title, setTitle] = useState('');
-
     const [description, setDescription] = useState('');
+    const [isLoading, setIsLoading] = useState(false); 
     const router = useRouter(); 
-    const userEmail = session?.user?.email; 
+    const userEmail = session?.user?.email;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsLoading(true);
         if(userEmail) {
             try {
                 const selectedIngredients = Object.keys(data).filter(key => data[key]);
                 const res = await createShared(selectedIngredients, userEmail, title, description);
-                if(res == "Created") {
-                    onClose()
-                    router.push("/all-coffes"); 
+                if(res === "Created") {
+                    onClose();
+                    router.push("/all-coffees"); 
                 }
             } catch (error) {
                 console.error("Failed to share ingredients", error);
+            } finally {
+                setIsLoading(false); 
             }
         }
     };
@@ -78,6 +80,7 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
             variant="outlined"
             color="secondary"
             required
+            disabled={isLoading}
         />
         <TextField
             label="Description"
@@ -90,6 +93,7 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
             variant="outlined"
             color="secondary"
             required
+            disabled={isLoading}
         />
         <ul>
           {Object.keys(data).map((key) => (
@@ -98,10 +102,10 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
             </li>
           ))}
         </ul>
-        <Button type="submit" variant="contained" sx={{ marginRight: 1 }}>
-          Share
+        <Button type="submit" variant="contained" sx={{ marginRight: 1 }} disabled={isLoading}>
+          {isLoading ? <CircularProgress size={24} /> : "Share"}
         </Button>
-        <Button variant="outlined" onClick={onClose}>
+        <Button variant="outlined" onClick={onClose} disabled={isLoading}>
           Back
         </Button>
       </Box>

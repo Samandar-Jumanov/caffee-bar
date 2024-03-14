@@ -11,8 +11,8 @@ export const Error = () => {
       justifyContent="center" 
       alignItems="center" 
       height="100vh" 
-      bgcolor="error.main" // Use theme's error color
-      color="white" // This ensures text color is white
+      bgcolor="error.main" 
+      color="white" 
     >
       <Typography variant="h4">Something went wrong</Typography>
     </Box>

@@ -5,18 +5,19 @@ import { Box, Grid, Card, CardContent, Typography, CardActions } from "@mui/mate
 import { getAllShared } from "@/actions/shared";
 import { ViewDetailsBtn } from "@/components/viewDetailsBtn";
 import { ISharedCoffe } from "@/types/types";
+import { revalidatePath } from "next/cache"
 
-const AllCoffees =  () => {
+const AllCoffees =  async  () => {
   const [allShared, setAllShared] = useState<ISharedCoffe[] | string>([]);
 
   useEffect(() => {
     const fetchAllShared = async () => {
       const allShared = await getAllShared();
       setAllShared(allShared);
-
     };
     fetchAllShared();
   }, []);
+
 
   const isSharedArray = Array.isArray(allShared);
 

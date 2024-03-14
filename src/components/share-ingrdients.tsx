@@ -5,7 +5,6 @@ import { Modal, Box, Button, Typography, TextField } from '@mui/material';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation"; // Corrected import
 import { createShared } from "@/actions/shared";
-import { revalidate } from "@/utils/sharebtn"
 
 type ShareIngredientsProps = {
   data: { [key: string]: boolean };
@@ -55,7 +54,6 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
                 const res = await createShared(selectedIngredients, userEmail, title, description);
                 if(res == "Created") {
                     onClose()
-                    revalidate()
                     router.push("/all-coffes"); 
                 }
             } catch (error) {

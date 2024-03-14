@@ -49,7 +49,10 @@ return  (
               <ListItemText primary="Create ingredient"/>
             </ListItemButton>
        </Link>
-       <Button color="error" variant="contained" onClick={handleSignOut}>  Log out  </Button>
+       <ListItemButton onClick={handleDrawerClose}>
+          <Button color="error" variant="contained" onClick={handleSignOut}>  Log out  </Button>
+  
+        </ListItemButton>
         </>
 
 

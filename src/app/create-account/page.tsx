@@ -69,7 +69,7 @@ const SignupForm: React.FC = () => {
                 fullWidth
                 variant="outlined"
                 InputLabelProps={{ style: { color: '#5d4037' } }}
-                onClick={(e : any  ) => setName(e.target.value)}
+                onChange={(e : any  ) => setName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -94,7 +94,7 @@ const SignupForm: React.FC = () => {
                 fullWidth
                 variant="outlined"
                 InputLabelProps={{ style: { color: '#5d4037' } }}
-                onClick={(e : any  ) => setPassword(e.target.value)}
+                onChange={(e : any  ) => setPassword(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} style={{ textAlign: 'center' }}>

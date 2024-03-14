@@ -51,7 +51,7 @@ useEffect(() =>{
 
          toast.success("Logged in succesfully")
          router.push("/all-coffes")
-      }catch(err){
+      }catch(error : any ){
         toast.error(`Cannot create an account ${error.message}`) 
       }
   };

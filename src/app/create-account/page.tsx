@@ -28,9 +28,9 @@ const SignupForm: React.FC = () => {
     setIsLoading(true);
     try {
       await signIn('github');
-      taost.success("Account created successfully")
+      toast.success("Account created successfully")
     } catch (error : any ) {
-      taost.error(`Cannot create an account ${error.message}`)
+      toast.error(`Cannot create an account ${error.message}`)
     } finally {
       setIsLoading(false);
     }
@@ -46,9 +46,9 @@ const SignupForm: React.FC = () => {
           name : name ,
           signup: "true"
         });
-        taost.success("Account created successfully")
+        toast.success("Account created successfully")
       }catch(error : any ){
-       taost.error(`Cannot create an account ${error.message}`)
+       toast.error(`Cannot create an account ${error.message}`)
       }
   };
 

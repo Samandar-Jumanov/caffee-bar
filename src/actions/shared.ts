@@ -77,6 +77,9 @@ export const createShared = async (
     if (!shared) {
           return "Cannot create "
     }
-
+    console.log({
+           newShared : shared ,
+           status : "Created"
+    })
    return "Created"
 };

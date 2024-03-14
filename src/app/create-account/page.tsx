@@ -6,22 +6,21 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import SignInButtons from '@/components/btns'; 
-import { createAccount } from '@/actions/user'; 
 import { useGlobalContext } from "@/components/context"
-import { ResponseType } from "@/types/types"
 
 const SignupForm: React.FC = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { isAuthenticated , setIsAuthenticated  } = useGlobalContext();
-   
+  const [ name , setName ] = useState<string | null >("")
+  const [ email , setEmail ] = useState<string | null >("")
+  const [ password  , setPassword  ] = useState<string | null >("")
+
   useEffect(() => {
     if (session) {
       router.push('/all-coffes'); 
     }
   }, [session, router]);
-
   
 
   const handleSignInWithGitHub = async () => {
@@ -35,32 +34,22 @@ const SignupForm: React.FC = () => {
     }
   };
 
-
-  console.log(isAuthenticated)
-  const handleSubmit = async (event :  any ) => {
-      event.preventDefault(); 
-      setIsLoading(true); 
-      const formData = new FormData(event.currentTarget); 
-
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> ) => {
+    e.preventDefault();
       try {
-      const res  : ResponseType  | undefined  =   await createAccount( formData ); 
-
-      if(res?.success) {
-        setIsAuthenticated(true)
-        router.push('/all-coffes'); 
-        setIsLoading(false)
-        }
-
-        if(!res?.success) {
-            alert("Something went wrong")
-        }
-
-      } catch (error : any ) {
-          console.log("Something went wrong", error)
-      } finally {
-        setIsLoading(false); 
-      };
+        await signIn('credentials', {
+          redirect: true,
+          email : "name@gmail.com",
+          password :"1234",
+          name : "name",
+          signup: "true"
+        });
+    
+      }catch(err){
+            console.log(err)
+      }
   };
+
 
   return (
     <Container maxWidth="sm">
@@ -79,6 +68,7 @@ const SignupForm: React.FC = () => {
                 fullWidth
                 variant="outlined"
                 InputLabelProps={{ style: { color: '#5d4037' } }}
+                onClick={(e : React.ChangeEvent<HTMLInputElement> ) => setName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -90,6 +80,7 @@ const SignupForm: React.FC = () => {
                 fullWidth
                 variant="outlined"
                 InputLabelProps={{ style: { color: '#5d4037' } }}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -102,6 +93,7 @@ const SignupForm: React.FC = () => {
                 fullWidth
                 variant="outlined"
                 InputLabelProps={{ style: { color: '#5d4037' } }}
+                onClick={(e : React.ChangeEvent<HTMLInputElement> ) => setPassword(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} style={{ textAlign: 'center' }}>

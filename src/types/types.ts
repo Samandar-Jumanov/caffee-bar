@@ -20,7 +20,7 @@ export type  ResponseType   = {
 
 
 
-export type  IUser  ={
+export type  IUser  = {
         id: string;
         name: string | null;
         email: string | null;
@@ -55,3 +55,12 @@ export type IBtns = {
     onGoogleSignIn ?  : () => void 
     onGithubSignIn : () => void
 }
+
+export type ICredentials = {
+   email : string ,
+   name : string ,
+   password : string 
+}
+
+
+

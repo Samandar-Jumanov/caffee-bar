@@ -3,18 +3,21 @@
 
 import React, { createContext, useContext, Dispatch, SetStateAction, useState, ReactNode } from "react";
 
+
 interface ContextProps {
     setOpen : Dispatch<SetStateAction<boolean>>;
     open : boolean,
     isAuthenticated: boolean; 
     setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
+   
 }
 
 const GlobalContext = createContext<ContextProps>({
     isAuthenticated: false, 
     setIsAuthenticated: () => {} ,
     open : false,
-    setOpen : () => {}
+    setOpen : () => {},
+   
 });
 
 interface GlobalContextProviderProps {
@@ -25,9 +28,8 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
     const [isAuthenticated, setIsAuthenticated ] = useState<boolean>(false);
     const [open , setOpen ] = useState<boolean>(false);
 
-
     return (
-        <GlobalContext.Provider value={{ isAuthenticated, setIsAuthenticated , open , setOpen }}>
+        <GlobalContext.Provider value={{ isAuthenticated, setIsAuthenticated , open , setOpen  }}>
             {children}
         </GlobalContext.Provider>
     );

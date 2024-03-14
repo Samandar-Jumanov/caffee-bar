@@ -1,12 +1,22 @@
+"use client"
 
-import React from "react";
+import React  , { useState  , useEffect}from "react";
 import { Box, Grid, Card, CardContent, Typography, CardActions } from "@mui/material";
 import { getAllShared } from "@/actions/shared";
 import { ViewDetailsBtn } from "@/components/viewDetailsBtn";
 import { ISharedCoffe } from "@/types/types";
 
-const AllCoffees = async  () => {
-  const allShared =  await  getAllShared();
+const AllCoffees =  () => {
+  const [allShared, setAllShared] = useState<ISharedCoffe[] | string>([]);
+
+  useEffect(() => {
+    const fetchAllShared = async () => {
+      const allShared = await getAllShared();
+      setAllShared(allShared);
+
+    };
+    fetchAllShared();
+  }, []);
 
   const isSharedArray = Array.isArray(allShared);
 

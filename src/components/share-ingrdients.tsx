@@ -52,10 +52,10 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
         if(userEmail) {
             try {
                 const selectedIngredients = Object.keys(data).filter(key => data[key]);
-                 revalidate()
                 const res = await createShared(selectedIngredients, userEmail, title, description);
                 if(res == "Created") {
                     onClose()
+                    revalidate()
                     router.push("/all-coffes"); 
                 }
             } catch (error) {

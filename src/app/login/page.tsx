@@ -1,17 +1,15 @@
 "use client"
 
-
 import React, { useState, useEffect } from 'react';
 import { Button, TextField, Grid, Paper, Typography, Container, CircularProgress } from '@mui/material';
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation"; 
 import SignInButtons from "@/components/btns";
 import { useSession } from "next-auth/react";
-import { signInAccount } from '@/actions/user';
 import { useGlobalContext } from "@/components/context";
-import { ResponseType } from "@/types/types"
 
 const LoginForm: React.FC = () => {
+
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,18 +17,17 @@ const LoginForm: React.FC = () => {
   const { isAuthenticated, setIsAuthenticated } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
 
-  // if (session || isAuthenticated) {
-  //   return <h1 color>Please sign out from your current account please</h1>;
-  // }
 
-  const handleSignInWithGoogle = async () => {
-    try {
-      await signIn('google');
-      router.push("/all-coffes")
-    } catch (error) {
-      console.error('Error signing in with Google:', error);
-    }
-  };
+
+useEffect(() =>{
+      
+      if(session){
+        setIsAuthenticated(true)
+        router.push("/all-coffes")
+      }
+
+} , [session , isAuthenticated])
+
 
   const handleSignInWithGitHub = async () => {
     try {
@@ -42,26 +39,21 @@ const LoginForm: React.FC = () => {
     }
   };
 
-  const handleSignIn = async (event : any ) => {
-    event.preventDefault();
-    setIsLoading(true);
-    const formData = new FormData(event.currentTarget);
-
-    try {
-      const res : ResponseType  = await signInAccount(formData);
-
-      if (res.success) {
-        router.push("/all-coffes"); 
-        setIsAuthenticated(true);
-      } else {
-        alert(res.message); 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> ) => {
+    e.preventDefault();
+      try {
+        await signIn('credentials', {
+          redirect: true,
+          email : email as string ,
+          password :password as string  ,
+          signup: "false"
+        });
+        router.push("/all-coffes")
+      }catch(err){
+            console.log(err)
       }
-    } catch (err : any ) {
-      alert("Something went wrong"); 
-    } finally {
-      setIsLoading(false); 
-    }
   };
+
 
   return (
     <Container maxWidth="sm">
@@ -69,7 +61,7 @@ const LoginForm: React.FC = () => {
         <Typography variant="h4" align="center" gutterBottom style={{ color: '#6d4c41' }}>
           Login
         </Typography>
-        <form noValidate autoComplete="off" onSubmit={handleSignIn}>
+        <form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <TextField
@@ -80,7 +72,7 @@ const LoginForm: React.FC = () => {
                 fullWidth
                 variant="outlined"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e : any ) => setEmail(e.target.value)}
                 InputLabelProps={{
                   style: { color: '#5d4037' },
                 }}
@@ -96,7 +88,7 @@ const LoginForm: React.FC = () => {
                 fullWidth
                 variant="outlined"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e : any ) => setPassword(e.target.value)}
                 InputLabelProps={{
                   style: { color: '#5d4037' },
                 }}
@@ -113,7 +105,6 @@ const LoginForm: React.FC = () => {
             </Grid>
             <Grid item xs={12} style={{ textAlign: 'center' }}>
              <SignInButtons
-              onGoogleSignIn={handleSignInWithGoogle}
               onGithubSignIn={handleSignInWithGitHub}
               />
             </Grid>

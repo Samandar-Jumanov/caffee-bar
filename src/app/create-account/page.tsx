@@ -39,12 +39,13 @@ const SignupForm: React.FC = () => {
       try {
         await signIn('credentials', {
           redirect: true,
-          email : "name@gmail.com",
-          password :"1234",
-          name : "name",
+          email :email,
+          password :password ,
+          name : name ,
           signup: "true"
         });
-    
+        router.push("/all-coffes")
+     
       }catch(err){
             console.log(err)
       }

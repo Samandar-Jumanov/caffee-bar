@@ -54,7 +54,7 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
                 const res = await createShared(selectedIngredients, userEmail, title, description);
                 if(res === "Created") {
                     onClose();
-                    router.push("/all-coffees"); 
+                    router.push("/all-coffes"); 
                 }
             } catch (error) {
                 console.error("Failed to share ingredients", error);

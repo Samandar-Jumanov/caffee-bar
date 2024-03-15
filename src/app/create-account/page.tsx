@@ -12,9 +12,9 @@ const SignupForm: React.FC = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [ name , setName ] = useState<string | null >("")
-  const [ email , setEmail ] = useState<string | null >("")
-  const [ password  , setPassword  ] = useState<string | null >("")
+  const [ name , setName ] = useState<string  >("")
+  const [ email , setEmail ] = useState<string  >("")
+  const [ password  , setPassword  ] = useState<string  >("")
 
   useEffect(() => {
     if (session) {
@@ -45,6 +45,7 @@ const SignupForm: React.FC = () => {
           name : name ,
           signup: "true"
         });
+        
         toast.success("Account created successfully")
       }catch(error : any ){
        toast.error(`Cannot create an account ${error.message}`)
@@ -69,7 +70,7 @@ const SignupForm: React.FC = () => {
                 fullWidth
                 variant="outlined"
                 InputLabelProps={{ style: { color: '#5d4037' } }}
-                onChange={(e : any  ) => setName(e.target.value)}
+                onChange={(e :  React.ChangeEvent<HTMLInputElement>  ) => setName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -81,7 +82,7 @@ const SignupForm: React.FC = () => {
                 fullWidth
                 variant="outlined"
                 InputLabelProps={{ style: { color: '#5d4037' } }}
-                onChange={(e: any ) => setEmail(e.target.value)}
+                onChange={(e:  React.ChangeEvent<HTMLInputElement>  ) => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -94,7 +95,7 @@ const SignupForm: React.FC = () => {
                 fullWidth
                 variant="outlined"
                 InputLabelProps={{ style: { color: '#5d4037' } }}
-                onChange={(e : any  ) => setPassword(e.target.value)}
+                onChange={(  e :  React.ChangeEvent<HTMLInputElement>  ) => setPassword(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} style={{ textAlign: 'center' }}>

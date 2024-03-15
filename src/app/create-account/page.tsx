@@ -38,6 +38,18 @@ const SignupForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement> ) => {
     e.preventDefault();
       try {
+        console.log({
+           email : email ,
+           name : name ,
+           password : password 
+        });
+
+
+        if(!email || !password ||  !name ) {
+           toast.error("Invalid inputs  ")
+           return
+        }
+
         await signIn('credentials', {
           redirect: true,
           email :email,
@@ -83,6 +95,7 @@ const SignupForm: React.FC = () => {
                 variant="outlined"
                 InputLabelProps={{ style: { color: '#5d4037' } }}
                 onChange={(e:  React.ChangeEvent<HTMLInputElement>  ) => setEmail(e.target.value)}
+
               />
             </Grid>
             <Grid item xs={12}>

@@ -20,39 +20,39 @@ const authOptions: NextAuthOptions = {
         name: { label: "Username", type: "text", placeholder: "Optional" }, 
         password: { label: "Password", type: "password" },
       },
-      async authorize( credentials : ICredentials | any  )  {
-        if (!credentials.email || !credentials.password) {
-          throw new Error('Email and password are required');
+      async authorize(credentials : any  ) {
+              
+        if(!credentials.email || !credentials.password) {
+            throw new Error('Please enter an email and password')
         }
 
-        const user : IUser | null = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
+        const user = await prisma.user.findUnique({
+            where: {
+                email: credentials.email
+            }
         });
 
-        if (user && user.password) {
-          const passwordMatch = await bcrypt.compare(credentials.password, user.password  as string  );
+        if (!user || !user?.password) {
+              const newUser = await prisma.user.create({
+                     data : {
+                          email : credentials.email,
+                          name : credentials.name,
+                          password : credentials.password 
+                     }
+              })
 
-          if (!passwordMatch) {
-            throw new Error('Incorrect password');
-          }
 
-          return user; 
-        } else if (!user && credentials.name) {
-          const newUser = await prisma.user.create({
-            data: {
-              email: credentials.email as string ,
-              name: credentials.username as string ,
-              password: await bcrypt.hash(credentials.password, 10),
-            },
-          });
-
-          return newUser; 
+              return newUser
         }
 
-        throw new Error('User not found');
-      },
+        const passwordMatch = await bcrypt.compare(credentials.password, user.password)
+
+        if (!passwordMatch) {
+            throw new Error('Incorrect password')
+        }
+
+        return user;
+    },
     }),
   ],
   secret: process.env.SECRET,

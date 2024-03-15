@@ -30,7 +30,7 @@ export const SideBarDrawer = () => {
 
   return (
     <List>
-       <Link href="/all-coffees">
+       <Link href="/all-coffes">
         <ListItemButton onClick={handleDrawerClose}>
           <ListItemText primary="All Coffees" />
         </ListItemButton>

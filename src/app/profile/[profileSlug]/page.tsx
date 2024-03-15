@@ -10,7 +10,7 @@ import { IUser } from "@/types/types";
 
 
 const UserAccount: React.FC<{ user: IUser }> = async  ({ params  } : any) => {
-  const userName = await params.userName.toString()
+  const userName = await params.profileSlug.toString()
   const user = await  getUserData(userName as string )
   if (!user) return <div>User not found</div>;
 

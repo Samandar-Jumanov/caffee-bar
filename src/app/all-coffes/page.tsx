@@ -7,21 +7,6 @@ import { ViewDetailsBtn } from "@/components/viewDetailsBtn";
 import { ISharedCoffe   } from "@/types/types";
 import  ExpandableText from "@/components/expand-text"
 
-const Skeleton = () =>{
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100%',
-        width: '100%',
-      }}
-    >
-      <Typography color="warning">Loading....</Typography>
-    </Box>
-  );
-}
 
 const AllCoffees =  async  () => {
   const [allShared, setAllShared] = useState<ISharedCoffe[] | string>([]);
@@ -36,11 +21,7 @@ const AllCoffees =  async  () => {
 
 
   const isSharedArray = Array.isArray(allShared);
-
-
-  if(!allShared || allShared.length <=0 ) {
-       return <Skeleton />
-  }
+ 
   return (
     <>
       <Box padding={3} sx={{ marginTop: '60px' }}>

@@ -1,4 +1,5 @@
 "use client"
+
 import React from 'react';
 import { List, ListItemButton, ListItemText, Button } from '@mui/material';
 import { signOut, useSession } from 'next-auth/react';
@@ -33,9 +34,9 @@ export const SideBarDrawer = () => {
 
       {session ? (
         <>
-          <Link href={`profile/${name}`}>
+          <Link href={`profile/${session?.user?.name}`}>
             <ListItemButton onClick={handleDrawerClose}>
-              <ListItemText primary="Create Ingredient" />
+              <ListItemText primary="Profile" />
             </ListItemButton>
           </Link>
 

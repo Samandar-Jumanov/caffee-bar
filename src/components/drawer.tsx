@@ -16,8 +16,6 @@ const handleSignOut = async () =>{
     if(session) {
           await  signOut()
           toast.success("Logged out succesfully")
-    }else {
-      setIsAuthenticated(false)
     }
 }
 

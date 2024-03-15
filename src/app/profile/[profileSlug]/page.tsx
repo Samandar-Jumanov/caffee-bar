@@ -5,7 +5,6 @@ import { Container, Grid, Typography, Avatar, Paper, Box, useMediaQuery, useThem
 import { getUserData } from "../../../actions/user";
 import { IUser, IUserShared, ISharedCoffe } from "@/types/types";
 import Image from "next/image"
-// Assuming getUserData is an async function that fetches user data based on userName
 
 const UserAccountPage = ({ params } : any ) => {
   const [user, setUser] = useState<IUser | null>(null);
@@ -20,13 +19,15 @@ const UserAccountPage = ({ params } : any ) => {
     };
 
     fetchData();
-  }, [userName]);
+  }, []);
+
+  console.log(user);
 
   if (!user) {
     return (
       <Container sx={{ color: '#fff', textAlign: 'center', marginTop: 4, backgroundColor: '#000' }}>
         <Typography variant="h6">User not found</Typography>
-      
+        <Button href="/create-account">  Please sign in to your account </Button>
       </Container>
     );
   }

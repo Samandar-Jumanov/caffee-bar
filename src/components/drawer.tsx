@@ -1,10 +1,15 @@
 "use client"
 
 import React from 'react';
-import { List, ListItemButton, ListItemText, Button } from '@mui/material';
+import { Divider, List, ListItemButton, ListItemIcon, ListItemText, Button, Typography } from '@mui/material';
+import CoffeeIcon from '@mui/icons-material/Coffee';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { signOut, useSession } from 'next-auth/react';
 import { useGlobalContext } from './context';
 import Link from 'next/link';
+import MuiLink from '@mui/material/Link'; 
 import { toast } from "react-hot-toast";
 
 export const SideBarDrawer = () => {
@@ -18,58 +23,83 @@ export const SideBarDrawer = () => {
     }
   };
 
-  
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
 
   return (
     <List>
-       <Link href="/all-coffes">
-        <ListItemButton onClick={handleDrawerClose}>
-          <ListItemText primary="All Coffees" />
-        </ListItemButton>
-      </Link>
-
+      <ListItemButton >
+          <MuiLink underline="none" color="inherit" sx={{ display: 'flex', width: '100%' }}>
+            <ListItemIcon>
+              <CoffeeIcon />
+            </ListItemIcon>
+             <Button sx={{  color : "black"}} onClick={handleDrawerClose} href="/all-coffes">  All coffes   </Button>
+          </MuiLink>
+      </ListItemButton>
+      <Divider />
       {session ? (
         <>
-          <Link href={`profile/${session?.user?.name}`}>
-            <ListItemButton onClick={handleDrawerClose}>
-              <ListItemText primary="Profile" />
-            </ListItemButton>
-          </Link>
-
-          <Link href="/add-coffee">
-            <ListItemButton onClick={handleDrawerClose}>
-              <ListItemText primary="Create Ingredient" />
-            </ListItemButton>
-          </Link>
-
           <ListItemButton onClick={handleDrawerClose}>
-            <Button color="error" variant="contained" onClick={handleSignOut} size="medium">
+            
+              <MuiLink underline="none" color="inherit" sx={{ display: 'flex', width: '100%' }}>
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <Button 
+                sx={{  color : "black"}} onClick={handleDrawerClose} 
+                href={`profile/${session?.user?.name}`}> 
+                 Your profile   
+                  </Button>
+
+              </MuiLink>
+           
+          </ListItemButton>
+          <Divider />
+          
+          <ListItemButton onClick={handleDrawerClose}>
+            
+            <MuiLink underline="none" color="inherit" sx={{ display: 'flex', width: '100%' }}>
+              <ListItemIcon>
+                <AccountCircleIcon />
+              </ListItemIcon>
+              <Button 
+              sx={{  color : "black"}} onClick={handleDrawerClose} 
+              href='/add-coffe'> 
+               Your profile   
+              </Button>
+
+            </MuiLink>
+         
+        </ListItemButton>
+        <Divider />
+
+          <ListItemButton onClick={handleSignOut}>
+            <Button
+              color="error"
+              variant="contained"
+              size="medium"
+              startIcon={<LogoutIcon />}
+              sx={{ width: '100%' }}
+            >
               Log out
             </Button>
           </ListItemButton>
-
         </>
       ) : (
-
         <ListItemButton onClick={handleDrawerClose}>
-          <Button 
-            href="/create-account"
-            variant="contained"
-            color="warning"
-            size="medium"
-          >
-            Create Account
-          </Button>
+          <Link href="/create-account" passHref>
+            <Button
+              variant="contained"
+              color="warning"
+              size="medium"
+              sx={{ width: '100%' }}
+            >
+              <Typography>Create Account</Typography>
+            </Button>
+          </Link>
         </ListItemButton>
       )}
-
-     
-      
-      
     </List>
   );
 };

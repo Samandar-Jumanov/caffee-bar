@@ -5,12 +5,10 @@ import { signOut, useSession } from 'next-auth/react';
 import { useGlobalContext } from './context';
 import Link from 'next/link';
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation"; // Fixed import statement
 
 export const SideBarDrawer = () => {
   const { setOpen } = useGlobalContext();
   const { data: session } = useSession();
-  const router = useRouter();
 
   const handleSignOut = async () => {
     if(session) {
@@ -19,10 +17,7 @@ export const SideBarDrawer = () => {
     }
   };
 
-  const profilePage = () => {
-    const name = session?.user?.name;
-    router.push(`profile/${name}`);
-  };
+  
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -38,10 +33,11 @@ export const SideBarDrawer = () => {
 
       {session ? (
         <>
-          <ListItemButton onClick={profilePage}>
-            <ListItemText primary="Your Profile" />
-          </ListItemButton>
-        
+          <Link href={`profile/${name}`}>
+            <ListItemButton onClick={handleDrawerClose}>
+              <ListItemText primary="Create Ingredient" />
+            </ListItemButton>
+          </Link>
 
           <Link href="/add-coffee">
             <ListItemButton onClick={handleDrawerClose}>

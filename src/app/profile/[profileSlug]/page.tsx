@@ -9,9 +9,10 @@ import { IUser } from "@/types/types";
 
 
 
-const UserAccount: React.FC<{ user: IUser }> = async  ({ params  } : any) => {
-  const userName = await params.profileSlug.toString()
-  const user = await  getUserData(userName as string )
+const UserAccount   = async  ({ params  } : any) => {
+  const email = await params.profileSlug.toString();
+
+  const user : IUser | any  = await  getUserData(email as string )
   if (!user) return <div>User not found</div>;
 
   return (
@@ -22,7 +23,7 @@ const UserAccount: React.FC<{ user: IUser }> = async  ({ params  } : any) => {
       </Avatar>
       <Typography variant="body1">Email: {user.email}</Typography>
       <Grid container spacing={2}>
-        {user.shared.map((shared) => (
+        {user.shared.map((shared : any ) => (
           <Grid item xs={12} sm={6} md={4} key={shared.id}>
             <Card>
               <CardContent>

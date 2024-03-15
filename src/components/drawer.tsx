@@ -20,8 +20,8 @@ export const SideBarDrawer = () => {
   };
 
   const profilePage = () => {
-    const userName = session?.user?.name;
-    router.push(`profile/${userName}`);
+    const email = session?.user?.email;
+    router.push(`profile/${email}`);
   };
 
   const handleDrawerClose = () => {

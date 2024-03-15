@@ -53,7 +53,6 @@ const SideBarLayout = () => {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            paddingTop: theme.mixins.toolbar.minHeight + 1, 
             backgroundColor: '#a58d7f',
           },
         }}

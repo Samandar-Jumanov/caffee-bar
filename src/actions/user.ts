@@ -2,14 +2,12 @@ import prisma from "../../prisma/prisma"
 import { IUser } from  "@/types/types"
 
 
-export const getUserData = async (  userName : string ) : Promise<IUser | null > =>{
+export const getUserData = async (  email : string ) : Promise<IUser | null > =>{
        try {
           const user : IUser | any = await prisma.user.findUnique({
-              where : { name  : userName },
+              where : { email  : email },
               include : { shared : true }
           })
-          
-
  
           return user   ? user : null
        }catch(err : any ){

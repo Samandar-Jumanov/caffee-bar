@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation"; 
 import { createShared } from "@/actions/shared";
 import { toast } from "react-hot-toast";
-import ImageUploader from  "./image-uploader"
+// import ImageUploader from  "./image-uploader"
 import { useGlobalContext } from './context';
 
 type ShareIngredientsProps = {
@@ -47,25 +47,30 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
     const [isLoading, setIsLoading] = useState(false); 
     const router = useRouter(); 
     const userEmail = session?.user?.email;
-    const { selectedFile } = useGlobalContext();
+    // const { selectedFile } = useGlobalContext();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
         
-        if(userEmail && selectedFile) {
+        if(userEmail) {
             try {
                 const selectedIngredients = Object.keys(data).filter(key => data[key]);
-                const res = await createShared(selectedIngredients, userEmail, title, description , selectedFile);
-                if(res === "Created") {
-                    onClose();
-                    toast.success("Shared succesfully");
-                    router.push("/all-coffes"); 
-                }else {
-                      toast.error("Failed to share ingredients");
-                }
+               const res =   await createShared(selectedIngredients, userEmail, title, description )
+               if(res === "Created"){
+                 onClose();
+                 toast.success("Shared succesfully");
+                 router.push("/all-coffes"); 
 
-            } catch (error) {
+               }else {
+                 toast.error("Somthing went wrong ");
+                 console.log(res)
+               }
+
+            } catch (error : any ) {
+              console.log({
+                 sharingErrror : error
+              })
                 toast.error(" Something went wrong with sharing  ");
             } finally {
                 setIsLoading(false); 
@@ -112,7 +117,7 @@ const ShareIngredients: React.FC<ShareIngredientsProps> = ({ data, open, onClose
           ))}
         </ul>
         <Box>
-          <ImageUploader />
+          {/* <ImageUploader /> */}
         </Box>
         <Button type="submit" variant="contained" sx={{ marginRight: 1 }} disabled={isLoading}>
           {isLoading ? <CircularProgress size={24} /> : "Share"}

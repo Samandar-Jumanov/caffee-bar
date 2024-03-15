@@ -6,10 +6,10 @@ import CommentIcon from '@mui/icons-material/Comment';
 const CoffeeCard = ({ coffee } : any ) => (
   <Card sx={{ width: '100%', maxWidth: 600, bgcolor: 'background.paper', m: 2, boxShadow: 3, color: "black", overflow: 'visible' }}>
     <Stack direction="row" spacing={2} sx={{ p: 2, alignItems: 'center' }}>
-      <Avatar src={coffee.user.image} alt={coffee.user.name} sx={{ width: 50, height: 50 }} />
+      <Avatar src={coffee.user.image} alt={coffee.user.name || "Default user "} sx={{ width: 50, height: 50 }} />
       <Box>
-        <Typography variant="subtitle1">{coffee.user.name}</Typography>
-        <Typography variant="body2" color="text.secondary">{new Date(coffee.date).toLocaleDateString()}</Typography>
+        <Typography variant="subtitle1">{coffee.user.name || "Default User "}</Typography>
+        <Typography variant="body2" color="text.secondary">{new Date(coffee.createdAt).toLocaleDateString()}</Typography>
       </Box>
     </Stack>
     {coffee.image && <CardMedia component="img" image={coffee.image} alt={coffee.title} sx={{ maxHeight: 300, objectFit: 'cover' }} />}
@@ -22,7 +22,7 @@ const CoffeeCard = ({ coffee } : any ) => (
       </Typography>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 1 }}>
         {coffee.ingredients.map((ingredient : string , index : string ) => (
-          <Chip key={index} label={ingredient} variant="outlined" />
+           <Chip key={index} label={ingredient} variant="outlined" />
         ))}
       </Box>
     </CardContent>

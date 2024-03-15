@@ -2,7 +2,7 @@
 
 import prisma from "../../prisma/prisma"
 import { ISharedCoffe , ICreatedSharedCoffe } from "@/types/types"
-import  saveToBucket from "@/utils/shareBucket";
+// import  saveToBucket from "@/utils/shareBucket";
 
 export const getAllShared = async ( )  : Promise<ISharedCoffe[]  | string >=> {
        try {
@@ -47,54 +47,51 @@ export const createShared = async (
     userEmail: string,
     title: string,
     description: string,
-    selectedFile  : File | null 
-)  : Promise<ICreatedSharedCoffe | string > => {
+)  : Promise<ICreatedSharedCoffe | string | undefined  > => {
    
 
-    if (!ingredients.length || !userEmail || !title || !description) {
-        return  "Invalid inputs"
-    }
-
-    const user = await prisma.user.findUnique({
-        where: { email: userEmail }
-    });
-
-    if (!user) {
-        return  "User not found | Something went wrong"
-    }
-
-    let imageUrl = "";
-    if(!selectedFile){
-          return "No image selected"
-    };
-
-
-    imageUrl   = await saveToBucket(selectedFile);
-    if(!imageUrl){
-        return "Cannot save image"
-    }
-
-
-    const shared   = await prisma.shared.create({
-        data: {
-            title,
-            description,
-            ingredients,
-            image : imageUrl,
-            user: {
-                connect: {
-                    id: user.id 
+      try {
+        if (!ingredients.length || !userEmail || !title || !description) {
+            return  "Invalid inputs"
+        }
+    
+        const user = await prisma.user.findUnique({
+            where: { email: userEmail }
+        });
+    
+        if (!user) {
+            return  "User not found | Something went wrong"
+        }
+    
+        // let imageUrl = "";
+        
+    
+    
+        const shared   = await prisma.shared.create({
+            data: {
+                title,
+                description,
+                ingredients,
+                user: {
+                    connect: {
+                        id: user.id 
+                    }
                 }
             }
+        });
+    
+        if (!shared) {
+              return "Cannot create "
         }
-    });
 
-    if (!shared) {
-          return "Cannot create "
-    }
-    console.log({
-           newShared : shared ,
-           status : "Created"
-    })
-   return "Created"
+        console.log({
+               newShared : shared ,
+               status : "Created"
+        })
+        
+       return "Created"
+      }catch(err : any ){
+           return err.message
+           console.log(err.message)
+      }
 };

@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast"
 
 
 export const SideBarDrawer = ( ) =>{
-const { isAuthenticated , setIsAuthenticated , setOpen , open  } = useGlobalContext();
+const {  setOpen , open  } = useGlobalContext();
 const { data : session } = useSession();
 
 const handleSignOut = async () =>{
@@ -42,7 +42,7 @@ return  (
                   </ListItemButton>
   </Link>
 
-    {(session || isAuthenticated) ? (
+    {(session) ? (
         <>
       <Link href="/add-coffee" >
           <ListItemButton onClick={handleDrawerClose}>

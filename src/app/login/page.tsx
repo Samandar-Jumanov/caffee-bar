@@ -14,20 +14,15 @@ const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { data: session } = useSession();
-  const { isAuthenticated, setIsAuthenticated } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
 
 
 
 useEffect(() =>{
-      
       if(session){
-        setIsAuthenticated(true)
         router.push("/all-coffes")
       }
-
-} , [session , isAuthenticated])
-
+} , [session])
 
   const handleSignInWithGitHub = async () => {
     try {
@@ -76,7 +71,7 @@ useEffect(() =>{
                 value={email}
                 onChange={(e : any ) => setEmail(e.target.value)}
                 InputLabelProps={{
-                  style: { color: '#5d4037' },
+                  style: { color: '#5d4037' }
                 }}
               />
             </Grid>

@@ -51,6 +51,7 @@ export type ISharedCoffe = {
 
 
 
+
 export type IBtns = {
     onGoogleSignIn ?  : () => void 
     onGithubSignIn : () => void
@@ -65,3 +66,13 @@ export type ICredentials = {
 export type IDescription ={
       description : string 
 }
+
+
+export type IUserAccount = {
+    user : IUser
+}
+
+export type IUserShared = {
+  items : ISharedCoffe[]
+}
+

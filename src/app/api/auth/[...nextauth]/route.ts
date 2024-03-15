@@ -33,11 +33,12 @@ const authOptions: NextAuthOptions = {
         });
 
         if (!user || !user?.password) {
+          const hashedPassword = await bcrypt.hash(credentials.password as string  , 10)
               const newUser = await prisma.user.create({
                      data : {
                           email : credentials.email,
                           name : credentials.name,
-                          password : credentials.password 
+                          password : hashedPassword 
                      }
               })
 

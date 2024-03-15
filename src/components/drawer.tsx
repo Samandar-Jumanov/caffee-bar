@@ -60,6 +60,7 @@ export const SideBarDrawer = () => {
             href="/create-account"
             variant="contained"
             color="warning"
+            size="medium"
           >
             Create Account
           </Button>

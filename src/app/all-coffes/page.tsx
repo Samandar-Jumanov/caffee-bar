@@ -4,7 +4,8 @@ import React  , { useState  , useEffect}from "react";
 import { Box, Grid, Card, CardContent, Typography, CardActions } from "@mui/material";
 import { getAllShared } from "@/actions/shared";
 import { ViewDetailsBtn } from "@/components/viewDetailsBtn";
-import { ISharedCoffe } from "@/types/types";
+import { ISharedCoffe   } from "@/types/types";
+import  ExpandableText from "@/components/expand-text"
 
 const Skeleton = () =>{
   return (
@@ -53,10 +54,10 @@ const AllCoffees =  async  () => {
                       {shared.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {shared.description}
+                        <ExpandableText  description={ shared.description } />
                     </Typography>
                     <Typography variant="body2" color="warning">
-                      {shared.user?.name}
+                      {shared.user.name || "Default User "}
                     </Typography>
                     <Typography variant="body2" sx={{ mt: 2 }}>
                       Ingredients: {shared.ingredients.join(", ")}

@@ -62,5 +62,6 @@ export type ICredentials = {
    password : string 
 }
 
-
-
+export type IDescription ={
+      description : string 
+}

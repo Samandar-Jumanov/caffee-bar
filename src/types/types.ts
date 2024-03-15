@@ -27,9 +27,9 @@ export type  IUser  = {
         emailVerified: Date | null;
         image: string | null;
         password: string | null;
-        hashedPassword: string | null;
         createdAt: Date;
         updatedAt: Date;
+        shared : ISharedCoffe[]
 }
 
 

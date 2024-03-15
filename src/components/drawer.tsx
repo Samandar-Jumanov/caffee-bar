@@ -1,69 +1,74 @@
 "use client"
-
 import React from 'react';
-import { List, ListItemButton, ListItemText, Button  } from '@mui/material';
-import { signOut , useSession  } from 'next-auth/react';
-import { useGlobalContext } from './context'
+import { List, ListItemButton, ListItemText, Button } from '@mui/material';
+import { signOut, useSession } from 'next-auth/react';
+import { useGlobalContext } from './context';
 import Link from 'next/link';
-import { toast } from "react-hot-toast"
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation"; // Fixed import statement
 
+export const SideBarDrawer = () => {
+  const { setOpen } = useGlobalContext();
+  const { data: session } = useSession();
+  const router = useRouter();
 
-export const SideBarDrawer = ( ) =>{
-const {  setOpen , open  } = useGlobalContext();
-const { data : session } = useSession();
-
-const handleSignOut = async () =>{
+  const handleSignOut = async () => {
     if(session) {
-          await  signOut()
-          toast.success("Logged out succesfully")
+      await signOut();
+      toast.success("Logged out successfully");
     }
-}
+  };
 
+  const profilePage = () => {
+    const userName = session?.user?.name;
+    router.push(`profile/${userName}`);
+  };
 
-const handleDrawerClose = () => {
+  const handleDrawerClose = () => {
     setOpen(false);
   };
 
-
-return  (
-<List>
-
-  <Link href="/all-coffes" >
-                <ListItemButton onClick={handleDrawerClose}>
-                    <ListItemText primary="All coffes "/>
-                  </ListItemButton>
-  </Link>
-  
-  <Link href="/" >
-                <ListItemButton onClick={handleDrawerClose}>
-                    <ListItemText primary="Home "/>
-                  </ListItemButton>
-  </Link>
-
-    {(session) ? (
-        <>
-      <Link href="/add-coffee" >
-          <ListItemButton onClick={handleDrawerClose}>
-              <ListItemText primary="Create ingredient"/>
-            </ListItemButton>
-       </Link>
-       <ListItemButton onClick={handleDrawerClose}>
-          <Button color="error" variant="contained"
-           onClick={handleSignOut} size="medium">  
-           Log out 
-           </Button>
+  return (
+    <List>
+       <Link href="/all-coffees">
+        <ListItemButton onClick={handleDrawerClose}>
+          <ListItemText primary="All Coffees" />
         </ListItemButton>
-        </>
+      </Link>
 
-    ) : 
-    
-    <Button 
-    href="/create-account"
-       variant="contained"
-        color="warning">
-           Create account 
-         </Button>
-    }
-</List>
-);
-}
+      {session ? (
+        <>
+          <ListItemButton onClick={profilePage}>
+            <ListItemText primary="Your Profile" />
+          </ListItemButton>
+          <ListItemButton onClick={handleDrawerClose}>
+            <Button color="error" variant="contained" onClick={handleSignOut} size="medium">
+              Log out
+            </Button>
+          </ListItemButton>
+
+          <Link href="/add-coffee">
+            <ListItemButton onClick={handleDrawerClose}>
+              <ListItemText primary="Create Ingredient" />
+            </ListItemButton>
+          </Link>
+        </>
+      ) : (
+
+        <ListItemButton onClick={handleDrawerClose}>
+          <Button 
+            href="/create-account"
+            variant="contained"
+            color="warning"
+          >
+            Create Account
+          </Button>
+        </ListItemButton>
+      )}
+
+     
+      
+      
+    </List>
+  );
+};

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import SideBarLayout from "@/components/sidebar"
-import './globals.css'
+// import './globals.css'
 import Provider from "@/components/provider"
 import { GlobalContextProvider } from "@/components/context";
 import ToasterContext from "@/components/ToasterContext";

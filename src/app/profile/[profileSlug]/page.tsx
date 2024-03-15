@@ -10,9 +10,9 @@ import { IUser } from "@/types/types";
 
 
 const UserAccount   = async  ({ params  } : any) => {
-  const email = await params.profileSlug.toString();
+  const name  = await params.profileSlug.toString();
 
-  const user : IUser | any  = await  getUserData(email as string )
+  const user : IUser | any  = await  getUserData(name  as string )
   if (!user) return <div>User not found</div>;
 
   return (

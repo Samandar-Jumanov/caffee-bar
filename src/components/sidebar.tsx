@@ -53,6 +53,7 @@ const SideBarLayout = () => {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+            paddingTop: '100px', 
             backgroundColor: '#a58d7f',
           },
         }}

@@ -20,8 +20,8 @@ export const SideBarDrawer = () => {
   };
 
   const profilePage = () => {
-    const email = session?.user?.email;
-    router.push(`profile/${email}`);
+    const name = session?.user?.name;
+    router.push(`profile/${name}`);
   };
 
   const handleDrawerClose = () => {
@@ -41,17 +41,20 @@ export const SideBarDrawer = () => {
           <ListItemButton onClick={profilePage}>
             <ListItemText primary="Your Profile" />
           </ListItemButton>
-          <ListItemButton onClick={handleDrawerClose}>
-            <Button color="error" variant="contained" onClick={handleSignOut} size="medium">
-              Log out
-            </Button>
-          </ListItemButton>
+        
 
           <Link href="/add-coffee">
             <ListItemButton onClick={handleDrawerClose}>
               <ListItemText primary="Create Ingredient" />
             </ListItemButton>
           </Link>
+
+          <ListItemButton onClick={handleDrawerClose}>
+            <Button color="error" variant="contained" onClick={handleSignOut} size="medium">
+              Log out
+            </Button>
+          </ListItemButton>
+
         </>
       ) : (
 

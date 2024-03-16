@@ -16,7 +16,7 @@ const DetailedCoffee = async ({ params } : any ) => {
         p: 2,
       }}>
         <CoffeCard coffee={coffee} />
-        <Button  href='/all-coffes' size="small">  All coffes  </Button>
+        <Button  href='/all-coffes' size="medium" variant="contained" color="warning">  All coffes  </Button>
       </Box>
     );
   };

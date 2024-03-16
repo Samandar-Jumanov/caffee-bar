@@ -9,7 +9,7 @@ type UserSlug  = {
 }
 
 export const UserAccount = async ( { userName }: UserSlug) => {
-   const user : IUser | null  = await getUserData(userName)
+   const user : IUser | undefined  = await getUserData(userName)
 
    if(!user){
     <Container sx={{

@@ -2,7 +2,7 @@ import prisma from "../../prisma/prisma"
 import { IUser } from  "@/types/types"
 
 
-export const getUserData = async (  name  : string ) : Promise<IUser | null > =>{
+export const getUserData = async (  name  : string ) : Promise<IUser | undefined > =>{
        console.log(name)
        try {
               await prisma.$connect().then(() =>{
@@ -16,10 +16,10 @@ export const getUserData = async (  name  : string ) : Promise<IUser | null > =>
           })
             
           console.log(user)
-          return user   ? user : null
+          return user  
        }catch(err : any ){
               console.log(err) 
-              return null 
+              return undefined
        }
 }
 

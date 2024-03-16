@@ -11,7 +11,7 @@ const UserAccountPage = async  ({ params } : any ) => {
   if (!user) {
     return (
       <Container sx={{
-        bgcolor: 'black', color: 'white', textAlign: 'center', mt: '-2px', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
+        color: 'white', textAlign: 'center', mt: '-2px', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
       }}>
         <Typography variant="h6">User not found</Typography>
         <Button href="/create-account" variant="contained" sx={{ mt: 2 }}>Please sign in to your account</Button>
@@ -21,7 +21,7 @@ const UserAccountPage = async  ({ params } : any ) => {
 
   return (
     <Container maxWidth="lg" sx={{
-      mt: 4, bgcolor: 'black', color: 'white', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
+      mt: 4, color: 'white', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
     }}>
       <Grid container spacing={2} justifyContent="center" alignItems="center">
         <Grid item xs={12} md={4} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>

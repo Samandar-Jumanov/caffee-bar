@@ -33,6 +33,7 @@ const IngredientsTableContainer: React.FC =  () => {
 
 
     return (
+        <>
         <TableContainer component={Paper} sx={{
             mt: 2,
             overflowX: 'auto',
@@ -62,8 +63,9 @@ const IngredientsTableContainer: React.FC =  () => {
          Share this 
          </Button>}
             </Box>
-            {close && <ShareIngredients data={chosen} onClose={handleOnClose} open={close} />}
         </TableContainer>
+       {close && <ShareIngredients data={chosen} onClose={handleOnClose} open={close} />}
+            </>
     );
 };
 

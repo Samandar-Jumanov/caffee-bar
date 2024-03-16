@@ -66,7 +66,7 @@ export const SideBarDrawer = () => {
               <Button 
               sx={{  color : "black"}} onClick={handleDrawerClose} 
               href='/add-coffe'> 
-               Your profile   
+               Add coffe 
               </Button>
 
             </MuiLink>

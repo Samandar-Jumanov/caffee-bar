@@ -1,10 +1,11 @@
 "use client"
 
 import React  , { useState  , useEffect}from "react";
-import { Box, Grid, Card, CardContent, Typography, CardActions } from "@mui/material";
+import { Box, Grid, Card, CardContent, Typography, CardActions , Button   } from "@mui/material";
 import { getAllShared } from "@/actions/shared";
 import { ViewDetailsBtn } from "@/components/viewDetailsBtn";
 import { ISharedCoffe   } from "@/types/types";
+import Link from "next/link"
 import  ExpandableText from "@/components/expand-text"
 
 
@@ -22,12 +23,14 @@ const AllCoffees =  async  () => {
 
   const isSharedArray = Array.isArray(allShared);
  
+  // fix styling 
+  
   return (
     <>
-      <Box padding={3} sx={{ marginTop: '60px' }}>
-        <Grid container spacing={4}>
-          {isSharedArray ? (
-            allShared.map((shared: ISharedCoffe) => (
+     {isSharedArray ? (
+      <Box  sx={{ marginTop: '60px' }}>
+             <Grid container spacing={4}>
+            {allShared.map((shared: ISharedCoffe) => (
               <Grid item xs={12} sm={6} md={4} key={shared.id}>
                 <Card>
                   <CardContent>
@@ -49,14 +52,37 @@ const AllCoffees =  async  () => {
                   </CardActions>
                 </Card>
               </Grid>
-            ))
-          ) : (
-            <Typography variant="h6" color="error" sx={{ textAlign: 'center', width: '100%' }}>
-              {allShared} 
-            </Typography>
-          )}
-        </Grid>
+        )) }
+          </Grid>
       </Box>
+         
+          ) : 
+
+          (
+            <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column', 
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100vh',
+              backgroundColor: 'background.default',
+              color: 'text.primary', 
+              p: 3, 
+            }}
+          >
+            <Typography variant="h4" component="h1" gutterBottom>
+              Something went wrong! Please try again later.
+            </Typography>
+            <Link href="/" passHref>
+              <Button variant="contained" color="primary">
+                Go Home
+              </Button>
+            </Link>
+          </Box>
+
+          )}
+         
     </>
   );
 };

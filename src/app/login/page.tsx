@@ -26,11 +26,17 @@ useEffect(() =>{
 
   const handleSignInWithGitHub = async () => {
     try {
-      await signIn('github');
-      toast.success("Logged in succesfully")
-      router.push("/all-coffes")
+      await signIn('github').
+      then((res  : any ) =>{
+        toast.success("Logged in succesfully")
+        router.push("/all-coffes")
+      }).catch(( error : any ) =>{
+           toast.success("Something went wrong ")
+          router.push("/")
+      })
+     
     } catch (error : any ) {
-       toast.error(`Cannot create an account ${error.message}`) 
+       toast.error(`Cannot log in yo your account ${error.message}`) 
     }
   };
 
@@ -42,10 +48,15 @@ useEffect(() =>{
           email : email as string ,
           password :password as string  ,
           signup: "false"
-        });
+        }).then((res ) =>{
+          toast.success("Logged in succesfully")
+          router.push("/all-coffes")
+        }).catch(( error : any ) =>{
+             toast.success("Something went wrong ")
+            router.push("/")
+        })
 
-         toast.success("Logged in succesfully")
-         router.push("/all-coffes")
+        
       }catch(error : any ){
         toast.error(`Cannot create an account ${error.message}`) 
       }

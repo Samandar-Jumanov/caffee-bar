@@ -28,7 +28,7 @@ const AllCoffees =  async  () => {
   return (
     <>
      {isSharedArray ? (
-      <Box  sx={{ marginTop: '60px' }}>
+      <Box  sx={{ marginTop: '80px' }}>
              <Grid container spacing={4}>
             {allShared.map((shared: ISharedCoffe) => (
               <Grid item xs={12} sm={6} md={4} key={shared.id}>

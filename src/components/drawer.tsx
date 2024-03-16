@@ -61,11 +61,11 @@ export const SideBarDrawer = () => {
             
             <MuiLink underline="none" color="inherit" sx={{ display: 'flex', width: '100%' }}>
               <ListItemIcon>
-                <AccountCircleIcon />
+                <AddCircleOutlineIcon />
               </ListItemIcon>
               <Button 
               sx={{  color : "black"}} onClick={handleDrawerClose} 
-              href='/add-coffe'> 
+              href='/add-coffee'> 
                Add coffe 
               </Button>
 

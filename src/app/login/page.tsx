@@ -52,8 +52,8 @@ useEffect(() =>{
           toast.success("Logged in succesfully")
           router.push("/all-coffes")
         }).catch(( error : any ) =>{
-             toast.success("Something went wrong ")
-            router.push("/")
+             toast.success(error.message)
+             router.push("/")
         })
 
         

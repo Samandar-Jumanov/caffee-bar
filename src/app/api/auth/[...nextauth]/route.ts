@@ -13,6 +13,7 @@ const authOptions: NextAuthOptions = {
       clientId: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     }),
+
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
@@ -20,6 +21,7 @@ const authOptions: NextAuthOptions = {
         name: { label: "Username", type: "text", placeholder: "Optional" }, 
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials : any  ) {
               
         if(!credentials.email || !credentials.password) {
@@ -32,7 +34,10 @@ const authOptions: NextAuthOptions = {
             }
         });
 
-        if (!user || !user?.password) {
+
+
+
+        if (!user ) {
           const hashedPassword = await bcrypt.hash(credentials.password as string  , 10)
               const newUser = await prisma.user.create({
                      data : {
@@ -42,12 +47,10 @@ const authOptions: NextAuthOptions = {
                      }
               })
 
-
               return newUser
         }
 
-        const passwordMatch = await bcrypt.compare(credentials.password, user.password)
-
+        const passwordMatch = await bcrypt.compare(credentials.password, user?.password as string )
         if (!passwordMatch) {
             throw new Error('Incorrect password')
         }

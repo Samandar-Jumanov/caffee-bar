@@ -29,10 +29,10 @@ const AllCoffees =  async  () => {
     <>
      {isSharedArray ? (
       <Box  sx={{ marginTop: '80px' }}>
-             <Grid container spacing={4}>
+             <Grid container spacing={4} sx={{ background : "#775B3E" , padding : "20px"}}>
             {allShared.map((shared: ISharedCoffe) => (
-              <Grid item xs={12} sm={6} md={4} key={shared.id}>
-                <Card>
+              <Grid item xs={12} sm={6} md={4} key={shared.id} >
+                <Card sx = {{ background : "#FFFAD6"}}>
                   <CardContent>
                     <Typography variant="h5" component="div">
                       {shared.title}

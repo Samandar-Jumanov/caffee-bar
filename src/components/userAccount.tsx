@@ -4,6 +4,7 @@ import {   Box , Avatar , Typography  } from "@mui/material"
 import { IUserAccount } from "@/types/types"
 
 
+const userDefaultImage = "https://example.com/path/to/coffee-themed-default-image.jpg";
 
 export const UserAccount = ({ user }:  IUserAccount | any   ) =>{
        return (

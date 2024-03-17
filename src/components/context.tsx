@@ -13,7 +13,6 @@ interface ContextProps {
 }
 
 const GlobalContext = createContext<ContextProps>({
-   
     open : false,
     setOpen : () => {},
     selectedFile: null,

@@ -2,12 +2,12 @@ import prisma from "../../prisma/prisma"
 import { IUser } from  "@/types/types"
 
 
-export const getUserData = async (  name  : string ) : Promise<IUser | undefined > =>{
+export const getUserData = async (  name  : string ) : Promise<IUser | null > =>{
        console.log(name)
        try {
               await prisma.$connect().then(() =>{
                          console.log('Db connected ')
-              }).catch(err => { console.log(err) })
+              }).catch(  ( err : any )  => { throw new Error(err.message) })
 
               
           const user : IUser | any = await prisma.user.findUnique({
@@ -16,10 +16,10 @@ export const getUserData = async (  name  : string ) : Promise<IUser | undefined
           })
             
           console.log(user)
-          return user  
+          return user   ? user : null 
        }catch(err : any ){
-              console.log(err) 
-              return undefined
+              throw new Error(err.message) 
+              return null
        }
 }
 

@@ -6,7 +6,6 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation"; 
 import SignInButtons from "@/components/btns";
 import { useSession } from "next-auth/react";
-import { useGlobalContext } from "@/components/context";
 import { toast } from "react-hot-toast"
 const LoginForm: React.FC = () => {
 

@@ -1,6 +1,7 @@
 import { Box , Button  } from "@mui/material"
 import { getSharedById  } from "../../../actions/shared"
 import  CoffeCard from "../../../components/CoffeCard"
+import { flushAllTraces } from "next/dist/trace";
 
 const DetailedCoffee = async ({ params } : any ) => {
     const coffeeId = params.coffeId.toString();
@@ -15,7 +16,7 @@ const DetailedCoffee = async ({ params } : any ) => {
         marginTop: '50px',
         p: 2,
       }}>
-        <CoffeCard coffee={coffee} />
+        <CoffeCard coffee={coffee}  />
         <Button  href='/all-coffes' size="medium" variant="contained" color="warning">  All coffes  </Button>
       </Box>
     );

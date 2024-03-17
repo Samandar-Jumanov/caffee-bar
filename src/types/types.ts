@@ -47,6 +47,7 @@ export type ISharedCoffe = {
       ingredients : string[]
       user : IUser 
       image ? : string 
+      createdAt : string 
 }
 
 

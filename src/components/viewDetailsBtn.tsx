@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@mui/material"
 import  { Coffe } from "@/types/types"
 
-export const ViewDetailsBtn= ( coffe : Coffe ) => {
+export const ViewDetailsBtn= ( coffe  : Coffe ) => {
     const router = useRouter();
 
     const handleViewDetails = () =>{

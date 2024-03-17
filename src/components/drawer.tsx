@@ -11,15 +11,18 @@ import { useGlobalContext } from './context';
 import Link from 'next/link';
 import MuiLink from '@mui/material/Link'; 
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export const SideBarDrawer = () => {
   const { setOpen } = useGlobalContext();
   const { data: session } = useSession();
+  const router = useRouter();
 
   const handleSignOut = async () => {
     if(session) {
       await signOut();
       toast.success("Logged out successfully");
+      router.push("/all-coffes")
     }
   };
 

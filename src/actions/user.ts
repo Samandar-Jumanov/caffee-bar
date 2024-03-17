@@ -18,9 +18,12 @@ export const getUserData = async (  name  : string ) : Promise<IUser | null > =>
           console.log(user)
           return user   ? user : null 
        }catch(err : any ){
-              throw new Error(err.message) 
+              console.log({
+                      error : err.message 
+              })
               return null
        }
-}
+};
+
 
 

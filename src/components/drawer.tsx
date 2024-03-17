@@ -20,9 +20,15 @@ export const SideBarDrawer = () => {
 
   const handleSignOut = async () => {
     if(session) {
-      await signOut();
+    signOut().then((res : any ) =>{
       toast.success("Logged out successfully");
       router.push("/all-coffes")
+    }).catch(( err : any ) =>{
+      console.log({
+         logOutError : err.message
+      })
+      toast.error("Something went wrong");
+    })
     }
   };
 

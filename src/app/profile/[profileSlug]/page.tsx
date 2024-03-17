@@ -10,6 +10,8 @@ import Image from "next/image"
 
 
 
+
+const defaultImageUrl = "https://i.pinimg.com/736x/09/52/e9/0952e9d8c44d9e1fcc1e9b6da06ca49c.jpg"
 const UserAccountPage =  async  ({ params }: any) => {
    const userName = params.profileSlug;
     const user : IUser | null = await getUserData(userName);
@@ -33,7 +35,7 @@ const UserAccountPage =  async  ({ params }: any) => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Paper elevation={3} sx={{ mb: 4, p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px', bgcolor: '#FFF6E5' }}>
+      <Paper elevation={3} sx={{ mb: 4, p: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px', bgcolor: '#ffb17a' }}>
           <UserAccount user={user} />
       </Paper>
     <Grid container spacing={2} justifyContent="center">
@@ -42,31 +44,32 @@ const UserAccountPage =  async  ({ params }: any) => {
     ) : (
       user?.shared?.map((item: ISharedCoffe) => (
         <Grid item xs={12} sm={6} md={4} key={item.id}>
-          <Card sx={{ maxWidth: 345, m: 'auto', bgcolor: '#FAF0E6', color: '#5A4238', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <Card sx={{ maxWidth: 345, m: 'auto', bgcolor: '#49250B', color: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
  
-          {/* <Image
-           src={item.image || contentDefaultImage}
+          <Image
+           src={item.image || defaultImageUrl}
            alt={item.title || 'Default Image Description'}
            height={140}
+           width={140}
            layout="responsive"
-/> */}
+/>
 
             <CardContent>
               <Typography gutterBottom variant="h6" component="div">
                 {item.title}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="white">
                 {item.description}
               </Typography>
               <Divider sx={{ my: 1 }} />
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="white">
                 Shared by: You
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              <Typography variant="body2" color="white" sx={{ mb: 2 }}>
                 {new Date(item.createdAt).toLocaleDateString()}
               </Typography>
               {item.ingredients.map((ingredient : string , index : number , array : string[]) => (
-                <Chip key={index} label={ingredient} variant="outlined" size="small" sx={{ mr: 0.5, mb: 0.5, color: '#5A4238', borderColor: '#8C7B75' }} />
+                <Chip key={index} label={ingredient} variant="outlined" size="small" sx={{ mr: 0.5, mb: 0.5, color: 'white', borderColor: 'white' }} />
               ))}
             </CardContent>
           </Card>
